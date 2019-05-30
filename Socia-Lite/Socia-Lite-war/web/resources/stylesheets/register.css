@@ -65,9 +65,14 @@ table{
     border-spacing: 0 0.5em;
 }
 table.center{
-    margin-left: auto;
-    margin-right: auto;
+    margin-left:auto; 
+    margin-right:auto; 
 }
+
+.center{
+    text-align: center;
+}
+tr,td{text-align:left;}
 
 /*nth-child(1) = the first td in each tr*/
 td:nth-child(1){
@@ -158,8 +163,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=date]:focus, inpu
 input[type=text]:placeholder, input[type=password]:placeholder, input[type=date]:placeholder, input[type=email]:placeholder {
   color: #cccccc;
 }
-
-
 
 /* ANIMATIONS */
 

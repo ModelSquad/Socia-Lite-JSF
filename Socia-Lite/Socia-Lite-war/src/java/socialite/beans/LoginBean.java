@@ -68,7 +68,7 @@ public class LoginBean implements Serializable {
             errorLogin = true;
             return null;
         } 
-        
+
         loginSessionBean.setLoggedUser(user);
         
         return "/welcome.xhtml?faces-redirect=true";

@@ -8,76 +8,31 @@ package socialite.beans;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
 import socialite.dao.UserFacade;
 import socialite.entity.User;
+import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  *
- * @author cherra
+ * @author Sevi
  */
 @Named(value = "userBean")
-@Dependent
-public class UserBean {
-
+@SessionScoped
+public class UserBean implements Serializable {
     @EJB
     private UserFacade userFacade;
-    
-    protected User user;
-    
-    protected String email="";
-    protected String password="";
-    protected String nickname="";
-    protected String name="";
-    protected String surname="";
-    
-    /**
-     * Creates a new instance of UserBean
-     */
-    public UserBean() {
-    }
-    
-    
+    protected User user;    
+
+    public UserBean() {        
+    }   
     
     public User getUser(){
         return user;
-    }
+    }  
     
-    public void setEmail(String email){
-        user.setEmail(email);
-    }
-    
-    public void setNickname(String nickname){
-        user.setNickname(nickname);
-    }
-    
-    public void setName(String name){
-        user.setName(name);
-    }
-    
-    public void setSurname(String surname){
-        user.setSurname(surname);
-    }
-    
-    
-    public void getEmail(String email){
-        user.setEmail(email);
-    }
-    
-    public void getNickname(String nickname){
-        user.setNickname(nickname);
-    }
-    
-    public void getName(String name){
-        user.setName(name);
-    }
-    
-    public void getSurname(String surname){
-        user.setSurname(surname);
-    }
-    
-    
-        @PostConstruct
+    @PostConstruct
     public void init () {
         this.user= new User();
 
@@ -86,6 +41,5 @@ public class UserBean {
     public String doRegister(){
         this.userFacade.create(user);
         return "";
-    }
-    
+    }    
 }
