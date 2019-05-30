@@ -67,7 +67,7 @@ public class LoginBean implements Serializable {
             errorLogin = true;
             return null;
         } 
-        return "welcome.jsf";
+        return "prueba";
     }
     
     private boolean checkPassword(String password_plaintext, String stored_hash) {
