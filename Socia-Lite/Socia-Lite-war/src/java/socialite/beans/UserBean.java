@@ -5,14 +5,14 @@
  */
 package socialite.beans;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.event.AjaxBehaviorEvent;
 import socialite.dao.UserFacade;
 import socialite.entity.User;
+import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  *
@@ -23,16 +23,23 @@ import socialite.entity.User;
 public class UserBean implements Serializable {
     @EJB
     private UserFacade userFacade;
-    private User user;
+    protected User user;    
 
-    
-    /**
-     * Creates a new instance of UserBean
-     */
     public UserBean() {        
+    }   
+    
+    public User getUser(){
+        return user;
     }  
     
-    
-    
+    @PostConstruct
+    public void init () {
+        this.user= new User();
 
+    }
+
+    public String doRegister(){
+        this.userFacade.create(user);
+        return "";
+    }    
 }
