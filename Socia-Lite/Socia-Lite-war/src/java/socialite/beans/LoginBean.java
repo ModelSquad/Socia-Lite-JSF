@@ -1,10 +1,10 @@
 package socialite.beans;
 
 import java.io.Serializable;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.mindrot.jbcrypt.BCrypt;
 import socialite.dao.UserFacade;
@@ -17,6 +17,9 @@ public class LoginBean implements Serializable {
     protected boolean errorLogin;
     protected String email, password;
 
+    @Inject
+    private LoginSessionBean loginSessionBean;
+    
     @PostConstruct
     public void init() {
         email = password = "";
@@ -58,8 +61,6 @@ public class LoginBean implements Serializable {
         if (password == null) {
             throw new RuntimeException("ERROR. Password is null");
         }
-
-        java.util.logging.Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, email);
         
         User user = userFacade.findByEmail(email);
         
@@ -67,7 +68,10 @@ public class LoginBean implements Serializable {
             errorLogin = true;
             return null;
         } 
-        return "welcome.jsf";
+        
+        loginSessionBean.setLoggedUser(user);
+        
+        return "/welcome.xhtml?faces-redirect=true";
     }
     
     private boolean checkPassword(String password_plaintext, String stored_hash) {
