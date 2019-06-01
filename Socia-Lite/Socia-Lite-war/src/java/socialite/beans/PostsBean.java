@@ -117,7 +117,7 @@ public class PostsBean implements Serializable {
         postFacade.create(post);
         if(newPostPictures != null) {
             try {
-                uploadPicturesReturnLinks(newPostPictures, post);
+                uploadPictures(newPostPictures, post);
             } catch (IOException|DbxException|ServletException ex) {
                 Logger.getLogger(PostsBean.class.getName()).log(Level.SEVERE, null, ex.getLocalizedMessage());
             }
@@ -134,7 +134,7 @@ public class PostsBean implements Serializable {
         return request.getParts().stream().filter(p -> part.getName().equals(p.getName())).collect(Collectors.toList());
     }
     
-    private void uploadPicturesReturnLinks(Part pictures, Post post) throws IOException, DbxException, ServletException {
+    private void uploadPictures(Part pictures, Post post) throws IOException, DbxException, ServletException {
         DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
         DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
         
