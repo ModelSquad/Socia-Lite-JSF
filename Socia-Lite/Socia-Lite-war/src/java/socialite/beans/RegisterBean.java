@@ -91,13 +91,7 @@ public class RegisterBean implements Serializable{
 
     public void setEmailTaken(boolean emailTaken) {
         this.emailTaken = emailTaken;
-    }
-    
-    public String saveName(){
-        userFacade.edit(user);
-        //editar el usuario de otros beans de sesion
-        return null;
-    }
+    }   
     
     private boolean emailIsAvailable(String email) {
         return userFacade.findByEmail(email) == null;

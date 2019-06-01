@@ -123,7 +123,6 @@
                         </form>
                     </label>
                     <h5 class="media-heading"><%=user.getName()%> <%=user.getSurname()%> <small><%=user.getNickname()%></small></h5>
-       
                     <br>   
                     </center>
                     
