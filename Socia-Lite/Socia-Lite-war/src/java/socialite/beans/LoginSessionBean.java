@@ -8,6 +8,7 @@ package socialite.beans;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.context.FacesContext;
 import socialite.entity.User;
 
 /**
@@ -33,5 +34,6 @@ public class LoginSessionBean implements Serializable {
      */
     public LoginSessionBean() {
     }
+    
     
 }

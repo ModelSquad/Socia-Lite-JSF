@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>
             Socia-Lite
@@ -36,46 +38,58 @@
         <h:outputStylesheet library="stylesheets" name="welcome.css"/>
         <h:outputScript library="js" name="welcome.js"/>
         
-<!-- SEVI        
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="<%=contextPath%>/PostServlet">SociaLite</a>
+            <h:link class="navbar-brand" outcome="welcome">SociaLite</h:link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="<%=contextPath%>/welcome.jsp"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> Home</a>
+                        <h:link class="nav-link" outcome="welcome"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> Home</h:link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=contextPath%>/friends.jsp"><i class="material-icons" style="font-size:22px;">people</i> Friends</a>
+                        <h:link class="nav-link"><i class="material-icons" style="font-size:22px;">people</i> Friends</h:link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=contextPath%>/groups.jsp"><i class="fa fa-users" aria-hidden="true"></i> Groups</a>
+                        <h:link class="nav-link"><i class="fa fa-users" aria-hidden="true"></i> Groups</h:link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=contextPath%>/user.jsp"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+                        <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> Profile</h:link>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <div id="searcher">
-                            <form class="form-inline md-form form-sm mt-0" action="SearchServlet">
+                            <h:form class="form-inline md-form form-sm mt-0">
                                 <label>
                                     <i class="fa fa-search" aria-hidden="true" style="color:lightsteelblue"></i>
-                                    <button input="submit" hidden></button>
-                                </label>                                               
-                            <input class="form-control form-control-sm ml-3 w-200 searcher-box input-lg" type="text" placeholder="Search users" aria-label="Search" name="search">                       
-                            </form>
+                                    <h:commandButton action="#{profileBean.enterSearch}" style="display:none"/>
+                                </label>
+                                <h:panelGroup id="showUsers">
+                                    <datalist id="autocomplete">
+                                        <c:if test="#{profileBean.searchedUserSize > 0}">
+                                            <c:forEach var="i" begin="0" end="#{profileBean.searchedUserSize}">
+                                                    <option>#{profileBean.searchedUser.get(i).getNickname()}</option>     
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if test="#{profileBean.searchedUserSize == 0 and not empty profileBean.searchedUser}">
+                                            <option>#{profileBean.searchedUser.get(0).getNickname()}</option>
+                                        </c:if>                                     
+                                    </datalist>
+                                </h:panelGroup>
+                                <h:inputText value="#{profileBean.searchUser}" id="searchUser" class="form-control form-control-sm ml-3 w-200 searcher-box input-lg"  p:placeholder="Search users" p:list="autocomplete"><f:ajax event="keyup" render="showUsers" listener="#{profileBean.searchByNickname}"/></h:inputText>
+                            </h:form>
                          </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%=contextPath%>/SignoutServlet"><i class="fa fa-sign-out"></i> Sign out</a>
+                        <h:form>
+                        <h:commandLink class="nav-link" action="#{signOutBean.signOut()}"><i class="fa fa-sign-out"></i> Sign out</h:commandLink>
+                        </h:form>
                     </li>
                 </ul>
             </div>
-        </nav>
--->
+        </nav>       
 <!-- CHERRA
                     
         

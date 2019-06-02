@@ -12,6 +12,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 import org.mindrot.jbcrypt.BCrypt;
 import socialite.dao.UserFacade;
 import socialite.entity.User;
@@ -23,6 +24,8 @@ import socialite.entity.User;
 @Named(value = "registerBean")
 @SessionScoped
 public class RegisterBean implements Serializable{
+    @Inject
+    private LoginSessionBean loginSessionBean;
     @EJB
     private UserFacade userFacade;    
     private User user;
@@ -113,7 +116,8 @@ public class RegisterBean implements Serializable{
         }else{
             user.setPassword(hashPassword(user.getPassword()));
             userFacade.create(user);
-            return "prueba";
+            loginSessionBean.setLoggedUser(user);
+            return "welcome";
         }              
     }
     

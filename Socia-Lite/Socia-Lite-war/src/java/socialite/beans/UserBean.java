@@ -26,13 +26,11 @@ import java.util.stream.Collectors;
 import javax.faces.context.FacesContext;
 import socialite.dao.UserFacade;
 import socialite.entity.User;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import socialite.entity.Media;
-import socialite.entity.Post;
 
 /**
  *
@@ -45,10 +43,9 @@ public class UserBean implements Serializable {
     private LoginSessionBean loginSessionBean;
     private User user;    
     @EJB
-    private UserFacade userFacade;    
-
+    private UserFacade userFacade;
     private Part profilePicture;
-    private boolean confirmChange;
+    private boolean confirmChange;       
     private static final String ACCESS_TOKEN = "3wQ3NmRIRPAAAAAAAAAADR3SEijLf_rodEXbuypIw0ubDuUyjZ-bDPvuA9-qdgEv";
 
     public UserBean() {        
@@ -58,7 +55,6 @@ public class UserBean implements Serializable {
     public void init () {
         user=loginSessionBean.getLoggedUser();
         confirmChange=false;
-
     }
     
     public User getUser(){
@@ -82,7 +78,7 @@ public class UserBean implements Serializable {
     public void setConfirmChange(boolean confirmChange) {
         this.confirmChange = confirmChange;
     }
-    
+
     public String changeProfilePicture(){
         try {
             uploadPictures(profilePicture);
@@ -92,7 +88,7 @@ public class UserBean implements Serializable {
         }
         return null;
     }
-   
+  
     
     public String saveChanges(){
         userFacade.edit(user);
