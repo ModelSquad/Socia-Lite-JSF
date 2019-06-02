@@ -83,6 +83,7 @@ public class ProfileBean implements Serializable{
             List<User> lista = userFacade.findByNickname(searchUser);
             if(!lista.isEmpty()){
                 user=lista.get(0);
+                searchUser=null;
                 return "profile";
             }else{
                 return null;
