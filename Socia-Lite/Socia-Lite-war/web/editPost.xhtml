@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Edit post</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Include the above in your HEAD tag -->
+
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+              crossorigin="anonymous"></link>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+        <!-- Fancybox -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="stylesheets" name="welcome.css"/>
+        <h:outputScript library="js" name="welcome.js"/>
+        <h:form id="editForm">
+
+            <!--<input type="hidden" name="id" value="<%= post.getIdPost()%>" />-->
+            <div id="cardElem">
+                <div class="card gedf-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <c:choose>
+                                    <c:when test="#{editPostBean.postSelected.user.profilePic == null}">
+                                        <h:panelGroup class="mr-2">
+                                            <h:graphicImage class="rounded-circle" width="45" value="https://cdn.clipart.email/0ad2ce5b5370f2d91ef8b465f6770e77_people-icons-3800-free-files-in-png-eps-svg-format_338-338.jpeg" /> 
+                                        </h:panelGroup> 
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h:panelGroup class="mr-2">
+                                            <h:graphicImage class="rounded-circle" width="45" value="#{editPostBean.postSelected.user.profilePic}" /> 
+                                        </h:panelGroup>
+                                    </c:otherwise>
+                                </c:choose>
+                                <div class="ml-2">
+                                    <h:panelGroup class="h5 m-0">@#{editPostBean.postSelected.user.nickname}</h:panelGroup>
+
+                                    <h:panelGroup class="h7 text-muted">#{editPostBean.postSelected.user.name}#{editPostBean.postSelected.user.surname}</h:panelGroup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h:panelGroup class="text-muted h7 mb-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> #{editPostBean.postSelected.date} </h:panelGroup><br/>
+                        <h:panelGroup class="md-form">
+                            <h:link ><i class="fas fa-pencil-alt prefix"> Title</i></h:link>
+                            <h:inputTextarea class="md-textarea form-control card-title " value="#{editPostBean.postSelected.title}" rows="3"></h:inputTextarea>
+                        </h:panelGroup>
+                        <h:panelGroup class="md-form">
+                            <a href="#"><i class="fas fa-pencil-alt prefix"> Body</i></a>
+                            <h:inputTextarea class="md-textarea form-control card-title " value="#{editPostBean.postSelected.text}" rows="3"></h:inputTextarea>
+                        </h:panelGroup>
+                        <br/>
+                        <div class="md-form">
+                            <a href="#"><i class="fas fa-pencil-alt prefix"> Visibility</i></a>
+                            <div class="input-group">
+                                <div id="radioBtn" class="btn-group">
+                                    <c:choose>                                        
+                                        <c:when test="#{editPostBean.postSelected.visibility.idVisibility == 2}">
+                                            <a class="btn btn-primary btn-sm notActive" data-toggle="visibility" data-title="public">Friends</a>
+                                            <a class="btn btn-primary btn-sm active" data-toggle="visibility" data-title="private">Private</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="btn btn-primary btn-sm active" data-toggle="visibility" data-title="public">Friends</a>
+                                            <a class="btn btn-primary btn-sm notActive" data-toggle="visibility" data-title="private">Private</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <h:inputHidden value="#{editPostBean.postVisibility}" p:id="visibility"></h:inputHidden>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h:panelGroup class="card-footer">
+                        <h:commandButton class="btn btn-primary save-btn" action="#{editPostBean.submitPost()}" value="Save"/>
+                    </h:panelGroup>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

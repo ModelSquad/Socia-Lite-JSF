@@ -21,9 +21,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -39,13 +39,23 @@ import socialite.entity.Post;
  * @author jaysus
  */
 @Named(value = "postsBean")
-@ViewScoped
+@SessionScoped
 public class PostsBean implements Serializable {
 
     private String newPostTitle;
     private String newPostText;
     private String newPostVisibility;
     private Part newPostPictures;
+    private List<Post> postList;
+    private Post postSelected;
+
+    public Post getPostSelected() {
+        return postSelected;
+    }
+
+    public void setPostSelected(Post postSelected) {
+        this.postSelected = postSelected;
+    }
 
     @EJB
     private VisibilityFacade visibilityFacade;
@@ -67,6 +77,13 @@ public class PostsBean implements Serializable {
         newPostTitle = newPostText = "";
         newPostVisibility = "public";
         newPostPictures = null;
+        List<Integer> ids = new ArrayList<>();
+        Integer idUser = this.loginSessionBean.getLoggedUser().getIdUser();
+        ids.add(idUser);
+                this.loginSessionBean.getLoggedUser().getUserList().forEach((u) -> {
+                    ids.add(u.getIdUser());
+                });
+        this.postList = this.postFacade.findPostsByMultipleIds(ids, idUser);
     }
     
     public String getNewPostTitle() {
@@ -83,6 +100,14 @@ public class PostsBean implements Serializable {
 
     public void setNewPostText(String newPostText) {
         this.newPostText = newPostText;
+    }
+
+    public List<Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
     }
 
     public String getNewPostVisibility() {
@@ -127,6 +152,16 @@ public class PostsBean implements Serializable {
         newPostTitle = newPostText = "";
         newPostVisibility = "public";
         newPostPictures = null;
+    }
+    
+    public void deletePost(Post post){
+        this.postFacade.remove(post);
+        init();
+    }
+    
+    public String editPost(Post post){
+        this.postSelected = post;
+        return "editPost";
     }
     
     private static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
