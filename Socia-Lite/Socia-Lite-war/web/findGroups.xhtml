@@ -12,7 +12,7 @@ and open the template in the editor.
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>SociaLite - Friends</title>
+        <title>SociaLite - Groups</title>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
@@ -52,11 +52,11 @@ and open the template in the editor.
                     <li class="nav-item">
                         <h:link class="nav-link" outcome="welcome"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> Home</h:link>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> Friends</h:link>
                     </li>
-                    <li class="nav-item">
-                        <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> Groups</h:link>
+                    <li class="nav-item active" outcome="groups">
+                        <h:link class="nav-link"><i class="fa fa-users" aria-hidden="true"></i> Groups</h:link>
                     </li>
                     <li class="nav-item">
                         <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> Profile</h:link>
@@ -115,63 +115,79 @@ and open the template in the editor.
                         </div>
                     </div>
                  </div>
-                <!-- Barra amigos -->
+                <!-- Barra grupos -->
                 <div class="col-sm text-left feed">
                     <div class="btn-group" role="group">
-                        <h:link outcome="friends" class="btn btn-selection btn-selected">My friends</h:link>
-                        <h:link outcome="findFriends" class="btn btn-selection btn-default">Find friends</h:link>
-                        <h:link outcome="friendshipRequest" class="btn btn-selection btn-default">Friendship request 
+                        <h:link outcome="groups" class="btn btn-selection btn-default">My groups</h:link>
+                        <h:link outcome="findGroups" class="btn btn-selection btn-selected">Find groups</h:link>
+                        <h:link outcome="groupRequest" class="btn btn-selection btn-default">Group request 
                             <span class="badge badge-danger">1</span>
                         </h:link>
                     </div>
-                    <!-- Aquí van los amigos (repeat) -->
-                    <ui:repeat value="#{userBean.user.userList}" var="friendFeed">
-                        <div class="card gedf-card mt-0 mb-3" style="width: 100%;">     
+                    <!-- Aquí van los groups (repeat) -->
+                    <ui:repeat value="#{userBean.findGroups}" var="association">
+                        <div class="card gedf-card expand-card m-0" style="width: 100%;">     
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="m-2">
                                         <!-- Imagen de perfil -->
                                     </div>
                                     <div class="ml-2">
-                                        <div class="h5 m-0"><a href="">#{friendFeed.nickname}</a></div>
-                                        <div class="h7 text-muted">#{friendFeed.name} #{friendFeed.surname}</div>
+                                        <div class="h5 m-0"><a href="">#{association.name}</a></div>
+                                        <div class="h7 text-muted">#{association.description}</div>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="btn-group btn-group-justified m-2 mr-4" >
                                         <h:form>
-                                            <!-- ver posibilidad de cambiar por command button -->
-                                            <h:link class="btn btn-xs btn-primary" ><i class="material-icons" style="font-size:20px;">remove_red_eye</i>See profile</h:link>
-                                            <h:commandButton class="btn btn-xs btn-danger trigger-btn" value="Delete"> </h:commandButton>
-                                            <!-- ver el data target etc. arreglar el icon
-                                            <i class="material-icons" style="font-size:20px;">clear</i>Delete
-                                            <a class="btn btn-xs btn-primary" href="ProfileServlet?user=<%=friend.getIdUser()%>" data-target="#" ><i class="material-icons" style="font-size:20px;">remove_red_eye</i>See profile</a>
-                                            <a class="btn btn-xs btn-danger trigger-btn" data-href="DeleteFriendServlet?idFriend=<%=friend.getIdUser()%>" data-target="#confirm-delete" data-toggle="modal"><i class="material-icons" style="font-size:20px;">clear</i>Delete</a>
-                                            --> 
+                                            <h:commandButton class="btn btn-xs btn-primary" value="Send request" action="#{userBean.sendGroupRequest(association)}"></h:commandButton>
                                         </h:form>
                                     </div>
                                 </div>
                             </div> 
                         </div>
-                    </ui:repeat>
-                    <!-- Confirmar borrado (modal)-->
-                    <div id="confirm-delete" class="modal fade">
-                        <div class="modal-dialog modal-confirm">
-                            <div class="modal-content">
-                                <div class="modal-header">				
-                                    <h4 class="modal-title">Are you sure?</h4>	
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Do you really want to delete this friend from your list? This process cannot be undone.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                                    <a id="delete-btn" class="btn btn-danger btn-ok">Delete</a>
-                                </div>
+                        <div class="card gedf-card list-card plegable mb-3" style="width: 100%;">
+                            <div class="mt-2">
+                                <ul>
+                                    <ui:repeat value="#{association.userList}" var="member">
+                                        <li>
+                                            #{member.name + " " + member.surname + " (" +member.nickname() + ")"}
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
                             </div>
                         </div>
+                    </ui:repeat>
+                    <!-- modal create group -->
+                    <!-- Arreglar el modal cuando se pueda
+                    <div class="modal fade" id="modalCreateGroup" >
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">Create group</h4>
+                            <h:button class="close">
+                                <span aria-hidden="true">&times;</span>
+                            </h:button>
+                          </div>
+                          <div class="modal-body mx-3">
+                              <form action="CreateGroupServlet" method="post" id="associationForm">
+                                <div class="md-form mb-5">
+                              <p>Name</p>
+                              <input type="text" id="nameAssociation" name="nameAssociation" class="form-control validate">
+                             </div>
+
+                            <div class="md-form mb-4">
+                              <p>Description</p>
+                              <input type="text" id="descriptionAssociation" name="descriptionAssociation" class="form-control validate">
+                            </div>
+                            <button class="btn btn-indigo" type="submit" form="associationForm">Create</button>
+                              </form>
+                          </div>
+
+                        </div>
+                      </div>
                     </div>
+                    -->
                 </div>
                 <!-- Menú lateral de grupos -->
                 <div class="col-sm-2 sidenav">

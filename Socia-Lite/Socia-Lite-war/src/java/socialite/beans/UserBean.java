@@ -30,6 +30,11 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import socialite.dao.AssociationFacade;
+import socialite.dao.FriendshipRequestFacade;
+import socialite.entity.Association;
+import socialite.entity.AssociationRequest;
+import socialite.entity.FriendshipRequest;
 import socialite.entity.Media;
 
 /**
@@ -39,11 +44,19 @@ import socialite.entity.Media;
 @Named(value = "userBean")
 @SessionScoped
 public class UserBean implements Serializable {
+
+    @EJB
+    private AssociationFacade associationFacade;
+
+
     @Inject
     private LoginSessionBean loginSessionBean;
     private User user;    
     @EJB
     private UserFacade userFacade;
+    @EJB
+    private FriendshipRequestFacade friendshipRequestFacade;
+    
     private Part profilePicture;
     private boolean confirmChange;       
     private static final String ACCESS_TOKEN = "3wQ3NmRIRPAAAAAAAAAADR3SEijLf_rodEXbuypIw0ubDuUyjZ-bDPvuA9-qdgEv";
@@ -122,6 +135,86 @@ public class UserBean implements Serializable {
         userFacade.edit(user);
         loginSessionBean.setLoggedUser(user);
         return null;
+    }
+    
+    public List<User> getFindFriends(){
+        return userFacade.findNotFriends(user);
+    }
+    
+    public List<Association> getFindGroups(){
+        return associationFacade.findNotAssociation(user);
+    }
+    
+    public String deleteFriend(User friend){
+        List<User> friends = this.user.getUserList();
+        friends.remove(user);
+        this.user.setUserList(friends);
+        this.user.setUserList1(friends);
+        friends = friend.getUserList();
+        friends.remove(this.user);
+        friend.setUserList(friends);
+        friend.setUserList1(friends);
+        userFacade.edit(user);
+        userFacade.edit(friend);
+        this.user = userFacade.find(user);
+        return "";
+    }
+    
+    public String deleteGroup(Association association){
+        //TODO
+        return "";
+    }
+    
+    public String sendFriendshipRequest(User user){
+        //TODO
+        return "";
+    }
+    
+    public String acceptFriendshipRequest(FriendshipRequest fr){
+        User friend = fr.getUserSender();
+        List<FriendshipRequest> requestList = this.user.getFriendshipRequestList();
+        requestList.remove(fr);
+        this.user.setFriendshipRequestList(requestList);
+        requestList = friend.getFriendshipRequestList1();
+        requestList.remove(fr);
+        friend.setFriendshipRequestList1(requestList);
+        List<User> friends = this.user.getUserList();
+        friends.add(fr.getUserSender());
+        this.user.setUserList(friends);
+        this.user.setUserList1(friends);
+        friends = friend.getUserList();
+        friends.add(this.user);
+        friend.setUserList(friends);
+        friend.setUserList1(friends);
+        friendshipRequestFacade.remove(fr);
+        userFacade.edit(user);
+        userFacade.edit(user);
+        this.user = userFacade.find(user);
+        return "";
+    }
+    
+    public String denyFriendshipRequest(FriendshipRequest fr){
+        User friend = fr.getUserSender();
+        friendshipRequestFacade.remove(fr);
+        userFacade.edit(user);
+        userFacade.edit(user);
+        this.user = userFacade.find(user);
+        return "";
+    }
+    
+    public String sendGroupRequest(Association association){
+        //TODO
+        return "";
+    }
+    
+    public String acceptGroupRequest(AssociationRequest associationRequest){
+        //TODO
+        return "";
+    }
+    
+    public String denyGroupRequest(AssociationRequest assocationRequest){
+        //TODO
+        return "";
     }
     
     private static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
