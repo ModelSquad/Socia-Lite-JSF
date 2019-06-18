@@ -65,6 +65,7 @@ public class UserFacade extends AbstractFacade<User> {
             notFriends=q.getResultList();
         } else {
             notFriends=this.findAll();
+            notFriends.remove(user);
         }
 
         return notFriends;

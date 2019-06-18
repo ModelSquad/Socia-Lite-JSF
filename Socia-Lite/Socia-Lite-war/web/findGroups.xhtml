@@ -146,17 +146,6 @@ and open the template in the editor.
                                 </div>
                             </div> 
                         </div>
-                        <div class="card gedf-card list-card plegable mb-3" style="width: 100%;">
-                            <div class="mt-2">
-                                <ul>
-                                    <ui:repeat value="#{association.userList}" var="member">
-                                        <li>
-                                            #{member.name + " " + member.surname + " (" +member.nickname() + ")"}
-                                        </li>
-                                    </ui:repeat>
-                                </ul>
-                            </div>
-                        </div>
                     </ui:repeat>
                     <!-- modal create group -->
                     <!-- Arreglar el modal cuando se pueda

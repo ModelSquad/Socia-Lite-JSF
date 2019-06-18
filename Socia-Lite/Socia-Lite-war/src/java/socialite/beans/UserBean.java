@@ -31,6 +31,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import socialite.dao.AssociationFacade;
+import socialite.dao.AssociationRequestFacade;
 import socialite.dao.FriendshipRequestFacade;
 import socialite.entity.Association;
 import socialite.entity.AssociationRequest;
@@ -45,8 +46,7 @@ import socialite.entity.Media;
 @SessionScoped
 public class UserBean implements Serializable {
 
-    @EJB
-    private AssociationFacade associationFacade;
+
 
 
     @Inject
@@ -56,6 +56,10 @@ public class UserBean implements Serializable {
     private UserFacade userFacade;
     @EJB
     private FriendshipRequestFacade friendshipRequestFacade;
+    @EJB
+    private AssociationRequestFacade associationRequestFacade;
+    @EJB
+    private AssociationFacade associationFacade;
     
     private Part profilePicture;
     private boolean confirmChange;       
@@ -141,10 +145,6 @@ public class UserBean implements Serializable {
         return userFacade.findNotFriends(user);
     }
     
-    public List<Association> getFindGroups(){
-        return associationFacade.findNotAssociation(user);
-    }
-    
     public String deleteFriend(User friend){
         List<User> friends = this.user.getUserList();
         friends.remove(user);
@@ -160,13 +160,22 @@ public class UserBean implements Serializable {
         return "";
     }
     
-    public String deleteGroup(Association association){
-        //TODO
-        return "";
-    }
+
     
-    public String sendFriendshipRequest(User user){
-        //TODO
+    public String sendFriendshipRequest(User friend){
+        FriendshipRequest fr = new FriendshipRequest();
+        fr.setDateTime(new java.sql.Date(System.currentTimeMillis()));
+        fr.setUserSender(this.user);
+        fr.setUserReceiver(friend);
+        List<FriendshipRequest> requests = this.user.getFriendshipRequestList1();
+        requests.add(fr);
+        this.user.setFriendshipRequestList1(requests);
+        requests = friend.getFriendshipRequestList();
+        requests.add(fr);
+        friend.setFriendshipRequestList (requests);
+        this.friendshipRequestFacade.create(fr);
+        this.userFacade.edit(friend);
+        this.userFacade.edit(this.user);
         return "";
     }
     
@@ -188,13 +197,19 @@ public class UserBean implements Serializable {
         friend.setUserList1(friends);
         friendshipRequestFacade.remove(fr);
         userFacade.edit(user);
-        userFacade.edit(user);
+        userFacade.edit(friend);
         this.user = userFacade.find(user);
         return "";
     }
     
     public String denyFriendshipRequest(FriendshipRequest fr){
         User friend = fr.getUserSender();
+        List<FriendshipRequest> requests = friend.getFriendshipRequestList1();
+        requests.remove(fr);
+        friend.setFriendshipRequestList1(requests);
+        requests = user.getFriendshipRequestList();
+        requests.remove(fr);
+        user.setFriendshipRequestList(requests);
         friendshipRequestFacade.remove(fr);
         userFacade.edit(user);
         userFacade.edit(user);
@@ -202,18 +217,62 @@ public class UserBean implements Serializable {
         return "";
     }
     
+    public List<Association> getFindGroups(){
+        return associationFacade.findNotAssociation(user);
+    }
+    
+    
     public String sendGroupRequest(Association association){
-        //TODO
+        AssociationRequest request = new AssociationRequest();
+        request.setUserSender(user);
+        request.setAssociationReceiver(association);
+        request.setDateTime(new java.sql.Date(System.currentTimeMillis()));
+        List<AssociationRequest> requests = this.user.getAssociationRequestList();
+        requests.add(request);
+        this.user.setAssociationRequestList(requests);
+        requests = association.getAssociationRequestList();
+        requests.add(request);
+        association.setAssociationRequestList(requests);
+        this.associationFacade.edit(association);
+        this.userFacade.edit(user);
+        this.associationRequestFacade.create(request);
+        this.user = this.userFacade.find(user);
         return "";
     }
     
     public String acceptGroupRequest(AssociationRequest associationRequest){
-        //TODO
+        Association association = associationRequest.getAssociationReceiver();
+        User sender = associationRequest.getUserSender();
+        List<User> members = association.getUserList();
+        members.add(sender);
+        association.setUserList(members);
+        List<Association> associations = sender.getAssociationList();
+        associations.add(association);
+        sender.setAssociationList(associations);
+        List<AssociationRequest> requests = association.getAssociationRequestList();
+        requests.remove(associationRequest);
+        association.setAssociationRequestList(requests);
+        requests = sender.getAssociationRequestList();
+        requests.remove(associationRequest);
+        sender.setAssociationRequestList(requests);
+        associationFacade.edit(association);
+        userFacade.edit(sender);
+        associationRequestFacade.remove(associationRequest);
         return "";
     }
     
-    public String denyGroupRequest(AssociationRequest assocationRequest){
-        //TODO
+    public String denyGroupRequest(AssociationRequest associationRequest){
+        Association association = associationRequest.getAssociationReceiver();
+        User sender = associationRequest.getUserSender();
+        List<AssociationRequest> requests = association.getAssociationRequestList();
+        requests.remove(associationRequest);
+        association.setAssociationRequestList(requests);
+        requests = sender.getAssociationRequestList();
+        requests.remove(associationRequest);
+        sender.setAssociationRequestList(requests);
+        associationFacade.edit(association);
+        userFacade.edit(sender);
+        associationRequestFacade.remove(associationRequest);
         return "";
     }
     
