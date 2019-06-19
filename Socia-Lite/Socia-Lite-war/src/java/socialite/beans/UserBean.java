@@ -147,7 +147,7 @@ public class UserBean implements Serializable {
     
     public String deleteFriend(User friend){
         List<User> friends = this.user.getUserList();
-        friends.remove(user);
+        friends.remove(friend);
         this.user.setUserList(friends);
         this.user.setUserList1(friends);
         friends = friend.getUserList();
@@ -156,7 +156,7 @@ public class UserBean implements Serializable {
         friend.setUserList1(friends);
         userFacade.edit(user);
         userFacade.edit(friend);
-        this.user = userFacade.find(user);
+        this.user = userFacade.find(user.getIdUser());
         return "";
     }
     
@@ -198,7 +198,7 @@ public class UserBean implements Serializable {
         friendshipRequestFacade.remove(fr);
         userFacade.edit(user);
         userFacade.edit(friend);
-        this.user = userFacade.find(user);
+        this.user = userFacade.find(user.getIdUser());
         return "";
     }
     
@@ -213,7 +213,7 @@ public class UserBean implements Serializable {
         friendshipRequestFacade.remove(fr);
         userFacade.edit(user);
         userFacade.edit(user);
-        this.user = userFacade.find(user);
+        this.user = userFacade.find(user.getIdUser());
         return "";
     }
     
@@ -236,7 +236,7 @@ public class UserBean implements Serializable {
         this.associationFacade.edit(association);
         this.userFacade.edit(user);
         this.associationRequestFacade.create(request);
-        this.user = this.userFacade.find(user);
+        this.user = userFacade.find(user.getIdUser());
         return "";
     }
     
@@ -255,9 +255,10 @@ public class UserBean implements Serializable {
         requests = sender.getAssociationRequestList();
         requests.remove(associationRequest);
         sender.setAssociationRequestList(requests);
-        associationFacade.edit(association);
         userFacade.edit(sender);
+        associationFacade.edit(association);
         associationRequestFacade.remove(associationRequest);
+        this.user = userFacade.find(user.getIdUser());
         return "";
     }
     
@@ -273,6 +274,7 @@ public class UserBean implements Serializable {
         associationFacade.edit(association);
         userFacade.edit(sender);
         associationRequestFacade.remove(associationRequest);
+        this.user = userFacade.find(user.getIdUser());
         return "";
     }
     

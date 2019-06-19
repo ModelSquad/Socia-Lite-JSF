@@ -196,11 +196,18 @@ and open the template in the editor.
                                         <div class="modal-body mx-3">
                                             <div class="md-form mb-5">
                                                 <label> Name </label>
-                                                <h:inputText value="#{createGroupBean.name}" class="form-control"/>
+                                                <h:inputText id="name" value="#{createGroupBean.name}" class="form-control" required="true"
+                                                             requiredMessage="Name is required"/>
+                                                <h:message for="name" style="color:red"/> <p></p>
+                                                
                                             </div>
                                             <div class="md-form mb-4">
                                                 <label>Description</label>
-                                                <h:inputText value="#{createGroupBean.description}" class="form-control"/>
+                                                <h:inputText id="description" value="#{createGroupBean.description}" class="form-control" required="true"
+                                                             requiredMessage="Description is required"/>
+                                                <h:message for="description" style="color:red"/> <p></p>                                          <h:message for="name" style="color:red"/> <p></p>
+
+
                                             </div>
                                             <h:commandButton  action="#{createGroupBean.createGroup()}" value="Create" class="btn btn-indigo"/>
                                         </div>

@@ -74,7 +74,6 @@ public class CreateGroupBean {
         associations = user.getAssociationList1();
         associations.add(group);
         user.setAssociationList1(associations);
-        userFacade.edit(user);
         associationFacade.create(group);
         return "groups";
     }
