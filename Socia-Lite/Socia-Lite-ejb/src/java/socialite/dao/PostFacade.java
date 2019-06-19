@@ -57,10 +57,10 @@ public class PostFacade extends AbstractFacade<Post> {
         return q.getResultList();
     }
 
-    public List<Post> findPostsByGroup(String idGroup) {
+    public List<Post> findPostsByGroup(Integer idGroup) {
         Query q;
         q = this.em.createQuery("select p from Post p where p.association.idAssociation = :id order by p.date DESC");
-        q.setParameter("id", Integer.valueOf(idGroup));
+        q.setParameter("id", idGroup);
         return q.getResultList();
     }
 }

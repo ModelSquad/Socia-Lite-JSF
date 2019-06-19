@@ -49,9 +49,11 @@ and open the template in the editor.
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <h:link class="nav-link" outcome="welcome"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> Home</h:link>
+                    <h:form>
+                    <li class="nav-item active">
+                        <h:commandLink class="nav-link" action="#{postsBean.reset()}"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> Home</h:commandLink>
                     </li>
+                    </h:form>   
                     <li class="nav-item active">
                         <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> Friends</h:link>
                     </li>

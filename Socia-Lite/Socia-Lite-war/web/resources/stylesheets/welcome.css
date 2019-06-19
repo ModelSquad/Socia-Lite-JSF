@@ -424,3 +424,12 @@ body {
   transform: translate(-50%, -50%);
   min-width: 750px;
 }
+
+/* Title for groups */
+.group-title{
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+    margin-left: 50%;
+    margin-right: 50%;
+}
