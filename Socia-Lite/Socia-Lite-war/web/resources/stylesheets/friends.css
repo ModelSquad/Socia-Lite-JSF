@@ -57,8 +57,8 @@ body {
                 padding-right: 4rem;
     }
     .gedf-card {
-                margin-bottom: 2.77rem;
-                margin-top: 2.77em;
+                margin-bottom: 0rem;
+                margin-top: 5em;
     }
     .gefg-card-side {
                 margin: 0.5em;
@@ -83,7 +83,7 @@ body {
 
 
 .btn-selection {
-  margin-legt: 2rem;
+  margin-left: 2rem;
   margin-right: 3rem;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -178,4 +178,8 @@ body {
 .close{
     background: transparent;
     border: transparent;
+}
+
+.gefd-card-members{
+    background: #DDD;
 }

@@ -154,22 +154,17 @@ and open the template in the editor.
                                         </h:form>
                                     </div>
                                 </div>
-                            </div> 
-                        </div>                             
-                             
-<!-- 
-                        <div class="card gedf-card list-card plegable mb-3" style="width: 100%;">
-                            <div class="mt-2">
-                                <ul>
-                                    <ui:repeat value="# {association.userList}" var="memberUser">
+                            </div>
+                            <div class="gefd-card-members list-card">
+                                <ul class="mt-2">    
+                                    <ui:repeat value="#{association.userList}" var="memberUser">
                                         <li>
-                                            (# {membeUser.name} # {memberUser.surname} (# {memberUser.nickname})}
+                                            (#{membeUser.name} #{memberUser.surname} (#{memberUser.nickname})}
                                         </li>
                                     </ui:repeat>
                                 </ul>
                             </div>
-                        </div>
--->
+                        </div>                              
                     </ui:repeat>
 
                     <!--otro modal que arreglar -->
