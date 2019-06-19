@@ -53,10 +53,10 @@ and open the template in the editor.
                         <h:link class="nav-link" outcome="welcome"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> Home</h:link>
                     </li>
                     <li class="nav-item">
-                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> Friends</h:link>
+                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> <h:outputText value="#{msgs.friends}"/></h:link>
                     </li>
                     <li class="nav-item active" outcome="groups">
-                        <h:link class="nav-link"><i class="fa fa-users" aria-hidden="true"></i> Groups</h:link>
+                        <h:link class="nav-link"><i class="fa fa-users" aria-hidden="true"></i> <h:outputText value="#{msgs.groups}"/></h:link>
                     </li>
                     <li class="nav-item">
                         <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> Profile</h:link>
@@ -99,7 +99,7 @@ and open the template in the editor.
             <div class="row content">
                  <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Friends</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.friends}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.userList}" var="friend">
                                 <div class="card gefg-card-side">
@@ -121,9 +121,9 @@ and open the template in the editor.
                 <!-- Barra grupos -->
                 <div class="col-sm text-left feed">
                     <div class="btn-group btn-group-bar" role="group">
-                        <h:link outcome="groups" class="btn btn-selection btn-selected">My groups</h:link>
-                        <h:link outcome="findGroups" class="btn btn-selection btn-default">Find groups</h:link>
-                        <h:link outcome="groupRequest" class="btn btn-selection btn-default">Group request 
+                        <h:link outcome="groups" class="btn btn-selection btn-selected"><h:outputText value="#{msgs.my_groups}"/></h:link>
+                        <h:link outcome="findGroups" class="btn btn-selection btn-default"><h:outputText value="#{msgs.find_groups}"/></h:link>
+                        <h:link outcome="groupRequest" class="btn btn-selection btn-default"><h:outputText value="#{msgs.groups_request}"/>
                             <ui:fragment rendered="#{false}">
                                 <span class="badge badge-danger" > #{userBean.user.friendshipRequestList.size()}</span>
                             </ui:fragment>
@@ -150,7 +150,7 @@ and open the template in the editor.
                                 <div>
                                     <div class="btn-group btn-group-justified m-2 mr-4" >
                                         <h:form>
-                                            <h:commandButton class="btn btn-xs btn-danger" value="Delete" action="#{deleteGroupBean.deleteGroup2(association)}"/>
+                                            <h:commandLink class="btn btn-xs btn-danger" action="#{deleteGroupBean.deleteGroup2(association)}"><h:outputText value="#{msgs.delete_group}"/></h:commandLink>
                                         </h:form>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@ and open the template in the editor.
                         <h:form>
                         <h:commandLink
                             onclick="$('#modalCreateGroup').modal('show');" immediate="true">
-                            <i class="material-icons m-2" style="font-size:40px;">add_circle</i>Create Group
+                            <i class="material-icons m-2" style="font-size:40px;">add_circle</i><h:outputText value="#{msgs.create_group}"/>
                             <f:ajax render=":formModal"/>
                         </h:commandLink>
                         </h:form>
@@ -183,28 +183,26 @@ and open the template in the editor.
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header text-center">
-                                            <h4 class="modal-title w-100 font-weight-bold">Create group</h4>
+                                            <h4 class="modal-title w-100 font-weight-bold"><h:outputText value="#{msgs.create_group}"/></h4>
                                                 <h:button class="close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </h:button>
                                         </div>
                                         <div class="modal-body mx-3">
                                             <div class="md-form mb-5">
-                                                <label> Name </label>
+                                                <label> <h:outputText value="#{msgs.name}"/> </label>
                                                 <h:inputText id="name" value="#{createGroupBean.name}" class="form-control" required="true"
                                                              requiredMessage="Name is required"/>
                                                 <h:message for="name" style="color:red"/> <p></p>
                                                 
                                             </div>
                                             <div class="md-form mb-4">
-                                                <label>Description</label>
+                                                <label><h:outputText value="#{msgs.description}"/></label>
                                                 <h:inputText id="description" value="#{createGroupBean.description}" class="form-control" required="true"
                                                              requiredMessage="Description is required"/>
-                                                <h:message for="description" style="color:red"/> <p></p>                                          <h:message for="name" style="color:red"/> <p></p>
-
-
+                                                <h:message for="description" style="color:red"/> <p></p>
                                             </div>
-                                            <h:commandButton  action="#{createGroupBean.createGroup()}" value="Create" class="btn btn-indigo"/>
+                                            <h:commandLink  action="#{createGroupBean.createGroup()}" class="btn btn-indigo"><h:outputText value="#{msgs.create}"/></h:commandLink>
                                         </div>
                                     </div>
                                 </div>
@@ -242,7 +240,7 @@ and open the template in the editor.
                 <!-- Menú lateral de grupos -->
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Groups</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.groups}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.associationList}" var="association">
                                 <div class="card gefg-card-side">
