@@ -55,10 +55,10 @@ and open the template in the editor.
                     </li>
                     </h:form>   
                     <li class="nav-item active">
-                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> Friends</h:link>
+                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> <h:outputText value="#{msgs.friends}"/></h:link>
                     </li>
                     <li class="nav-item">
-                        <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> Groups</h:link>
+                        <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> <h:outputText value="#{msgs.groups}"/></h:link>
                     </li>
                     <li class="nav-item">
                         <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> Profile</h:link>
@@ -101,7 +101,7 @@ and open the template in the editor.
             <div class="row content">
                  <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Friends</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.friends}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.userList}" var="friend">
                                 <div class="card gefg-card-side">
@@ -123,9 +123,9 @@ and open the template in the editor.
                 <!-- Barra amigos -->
                 <div class="col-sm text-left feed">
                     <div class="btn-group btn-group-bar" role="group">
-                        <h:link outcome="friends" class="btn btn-selection btn-selected">My friends</h:link>
-                        <h:link outcome="findFriends" class="btn btn-selection btn-default">Find friends</h:link>
-                        <h:link outcome="friendshipRequest" class="btn btn-selection btn-default">Friendship request 
+                        <h:link outcome="friends" class="btn btn-selection btn-selected"><h:outputText value="#{msgs.my_friends}"/></h:link>
+                        <h:link outcome="findFriends" class="btn btn-selection btn-default"><h:outputText value="#{msgs.find_friends}"/></h:link>
+                        <h:link outcome="friendshipRequest" class="btn btn-selection btn-default"><h:outputText value="#{msgs.friendship_request}"/>
                             <ui:fragment rendered="#{userBean.user.friendshipRequestList.size() > 0}">
                                 <span class="badge badge-danger" > #{userBean.user.friendshipRequestList.size()}</span>
                             </ui:fragment>
@@ -149,8 +149,8 @@ and open the template in the editor.
                                     <div class="btn-group btn-group-justified m-2 mr-4" >
                                         <h:form>
                                             <!-- ver posibilidad de cambiar por command button -->
-                                            <h:link class="btn btn-xs btn-primary" ><i class="material-icons" style="font-size:20px;">remove_red_eye</i>See profile</h:link>
-                                            <h:commandButton class="btn btn-xs btn-danger" value="Delete" action="#{userBean.deleteFriend(friendFeed)}"> </h:commandButton>
+                                            <h:link class="btn btn-xs btn-primary" ><i class="material-icons" style="font-size:20px;">remove_red_eye</i><h:outputText value="#{msgs.see_profile}"/></h:link>
+                                            <h:commandLink class="btn btn-xs btn-danger" action="#{userBean.deleteFriend(friendFeed)}"><h:outputText value="#{msgs.delete_friend}"/> </h:commandLink>
                                             <!-- ver el data target etc. arreglar el icon
                                             <i class="material-icons" style="font-size:20px;">clear</i>Delete
                                             <a class="btn btn-xs btn-primary" href="ProfileServlet?user=<%=friend.getIdUser()%>" data-target="#" ><i class="material-icons" style="font-size:20px;">remove_red_eye</i>See profile</a>
@@ -185,7 +185,7 @@ and open the template in the editor.
                 <!-- Menú lateral de grupos -->
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Groups</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.groups}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.associationList}" var="association">
                                 <div class="card gefg-card-side">

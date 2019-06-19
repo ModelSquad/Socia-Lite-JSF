@@ -55,10 +55,10 @@ and open the template in the editor.
                     </li>
                     </h:form>   
                     <li class="nav-item active">
-                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> Friends</h:link>
+                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> <h:outputText value="#{msgs.friends}"/></h:link>
                     </li>
                     <li class="nav-item">
-                        <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> Groups</h:link>
+                        <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> <h:outputText value="#{msgs.groups}"/></h:link>
                     </li>
                     <li class="nav-item">
                         <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> Profile</h:link>
@@ -101,7 +101,7 @@ and open the template in the editor.
             <div class="row content">
                  <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Friends</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.friends}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.userList}" var="friend">
                                 <div class="card gefg-card-side">
@@ -123,9 +123,9 @@ and open the template in the editor.
                 <!-- Barra amigos -->
                 <div class="col-sm text-left feed">
                     <div class="btn-group btn-group-bar" role="group">
-                        <h:link outcome="friends" class="btn btn-selection btn-default">My friends</h:link>
-                        <h:link outcome="findFriends" class="btn btn-selection btn-selected">Find friends</h:link>
-                        <h:link outcome="friendshipRequest" class="btn btn-selection btn-default">Friendship request 
+                        <h:link outcome="friends" class="btn btn-selection btn-default"><h:outputText value="#{msgs.my_friends}"/></h:link>
+                        <h:link outcome="findFriends" class="btn btn-selection btn-selected"><h:outputText value="#{msgs.find_friends}"/></h:link>
+                        <h:link outcome="friendshipRequest" class="btn btn-selection btn-default"><h:outputText value="#{msgs.friendship_request}"/>
                             <ui:fragment rendered="#{userBean.user.friendshipRequestList.size() > 0}">
                                 <span class="badge badge-danger" > #{userBean.user.friendshipRequestList.size()}</span>
                             </ui:fragment>
@@ -148,7 +148,7 @@ and open the template in the editor.
                                 <div>
                                     <div class="btn-group btn-group-justified m-2 mr-4" >
                                         <h:form>
-                                            <h:commandButton action="#{userBean.sendFriendshipRequest(notFriend)}" class="btn btn-xs btn-primary" value="Send friendship request"></h:commandButton>
+                                            <h:commandLink action="#{userBean.sendFriendshipRequest(notFriend)}" class="btn btn-xs btn-primary"><h:outputText value="#{msgs.send_friendship_request}"/></h:commandLink>
                                         </h:form>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@ and open the template in the editor.
                 <!-- Menú lateral de grupos -->
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Groups</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.groups}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.associationList}" var="association">
                                 <div class="card gefg-card-side">

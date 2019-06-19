@@ -330,47 +330,6 @@ body {
     vertical-align: middle;    
 }
 
-.friend-panel{
-    text-align: center;
-    justify-content: center;
-    padding-top: 0px;
-    background-color: #FFF;
-    height: 70vh;
-    width: 95%;
-    border-radius: 10px;
-}
-
-
-.friend-content{
-    height: 93%;
-    background: #eeeeee;
-    overflow-y: hidden; 
-}
-
-.panel-heading{
-    padding: 10px 16px;
-    background: #4285f4;
-    color: #f1f1f1;
-}
-
-.side-profile-pic{
-    height: 40px;
-    width: 40px;
-    margin: 5px;
-}
-
-.card-profile-pic{
-    height: 90px;
-    width: 90px;
-    margin-left: 20px;
-}
-
-.btn-group-bar{
-    background: #FFF;
-    margin-bottom: 20px;
-    width: 102%;
-    left: -0.9%;
-}
 
 
 /* Page content */

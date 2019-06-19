@@ -37,6 +37,7 @@
     </h:head>
     <h:body>
         <h:outputStylesheet library="stylesheets" name="welcome.css"/>
+        <h:outputStylesheet library="stylesheets" name="friends.css"/>
         <h:outputScript library="js" name="welcome.js"/>
         <nav class="navbar navbar-expand-lg navbar-dark">
             <h:link class="navbar-brand" outcome="welcome">SociaLite</h:link>
@@ -51,10 +52,10 @@
                     </li>
                     </h:form>    
                     <li class="nav-item">
-                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> Friends</h:link>
+                        <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> <h:outputText value="#{msgs.friends}"/></h:link>
                     </li>
                     <li class="nav-item">
-                        <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> Groups</h:link>
+                        <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> <h:outputText value="#{msgs.groups}"/></h:link>
                     </li>
                     <li class="nav-item">
                         <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> Profile</h:link>
@@ -96,7 +97,7 @@
             <div class="row content">
                  <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Friends</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.friends}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.userList}" var="friend">
                                 <div class="card gefg-card-side">
@@ -266,7 +267,7 @@
             </div>
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
-                        <div class="panel-heading">Groups</div>
+                        <div class="panel-heading"><h:outputText value="#{msgs.groups}"/></div>
                         <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.associationList}" var="association">
                                 <div class="card gefg-card-side">
