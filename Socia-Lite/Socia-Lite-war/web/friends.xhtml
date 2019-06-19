@@ -100,16 +100,19 @@ and open the template in the editor.
                  <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
                         <div class="panel-heading">Friends</div>
-                        <div class="panel-body friend-content" style="overflow-y: scroll; ">
+                        <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.userList}" var="friend">
-                                <div class="d-flex align-items-center">
-                                        <div class="mr-0">
-                                            <!--Profile pic-->
-                                        </div>
-                                        <div class="ml-2">
-                                            <div class="h5 m-0"><a href=">">#{friend.nickname}</a></div>
-                                            <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
-                                        </div>
+                                <div class="card gefg-card-side">
+                                    <div class="d-flex align-items-center">
+                                            <div class="mr-0">
+                                                <h:graphicImage value="#{association.profilePic}" class="rounded-circle side-profile-pic" rendered="#{friend.profilePic!=null}"/>
+                                                <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{friend.profilePic==null}"/>
+                                            </div>
+                                            <div class="ml-2">
+                                                <div class="h5 m-0"><a href=">">#{friend.nickname}</a></div>
+                                                <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
+                                            </div>
+                                    </div>
                                 </div>
                             </ui:repeat>
                         </div>
@@ -117,20 +120,23 @@ and open the template in the editor.
                  </div>
                 <!-- Barra amigos -->
                 <div class="col-sm text-left feed">
-                    <div class="btn-group" role="group">
+                    <div class="btn-group btn-group-bar" role="group">
                         <h:link outcome="friends" class="btn btn-selection btn-selected">My friends</h:link>
                         <h:link outcome="findFriends" class="btn btn-selection btn-default">Find friends</h:link>
                         <h:link outcome="friendshipRequest" class="btn btn-selection btn-default">Friendship request 
-                            <span class="badge badge-danger">1</span>
+                            <ui:fragment rendered="#{userBean.user.friendshipRequestList.size() > 0}">
+                                <span class="badge badge-danger" > #{userBean.user.friendshipRequestList.size()}</span>
+                            </ui:fragment>
                         </h:link>
                     </div>
                     <!-- Aquí van los amigos (repeat) -->
                     <ui:repeat value="#{userBean.user.userList}" var="friendFeed">
-                        <div class="card gedf-card mt-0 mb-3" style="width: 100%;">     
+                        <div class="card gedf-card mt-0 mb-3">     
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="m-2">
-                                        <!-- Imagen de perfil -->
+                                        <h:graphicImage value="#{friendFeed.profilePic}" class="rounded-circle card-profile-pic" rendered="#{friendFeed.profilePic!=null}"/>
+                                        <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle card-profile-pic" rendered="#{friendFeed.profilePic==null}"/>
                                     </div>
                                     <div class="ml-2">
                                         <div class="h5 m-0"><a href="">#{friendFeed.nickname}</a></div>
@@ -142,7 +148,7 @@ and open the template in the editor.
                                         <h:form>
                                             <!-- ver posibilidad de cambiar por command button -->
                                             <h:link class="btn btn-xs btn-primary" ><i class="material-icons" style="font-size:20px;">remove_red_eye</i>See profile</h:link>
-                                            <h:commandButton class="btn btn-xs btn-danger trigger-btn" value="Delete"> </h:commandButton>
+                                            <h:commandButton class="btn btn-xs btn-danger" value="Delete" action="#{userBean.deleteFriend(friendFeed)}"> </h:commandButton>
                                             <!-- ver el data target etc. arreglar el icon
                                             <i class="material-icons" style="font-size:20px;">clear</i>Delete
                                             <a class="btn btn-xs btn-primary" href="ProfileServlet?user=<%=friend.getIdUser()%>" data-target="#" ><i class="material-icons" style="font-size:20px;">remove_red_eye</i>See profile</a>
@@ -154,7 +160,7 @@ and open the template in the editor.
                             </div> 
                         </div>
                     </ui:repeat>
-                    <!-- Confirmar borrado (modal)-->
+                    <!-- Confirmar borrado (modal)
                     <div id="confirm-delete" class="modal fade">
                         <div class="modal-dialog modal-confirm">
                             <div class="modal-content">
@@ -172,19 +178,23 @@ and open the template in the editor.
                             </div>
                         </div>
                     </div>
+                    -->
                 </div>
                 <!-- Menú lateral de grupos -->
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
                         <div class="panel-heading">Groups</div>
-                        <div class="panel-body friend-content" style="overflow-y: scroll; ">
+                        <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.associationList}" var="association">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-0">
-                                        <!--Profile pic-->
-                                    </div>
-                                    <div class="ml-2">
-                                        <div class="h5 m-0"><a href="">#{association.name}</a></div>
+                                <div class="card gefg-card-side">
+                                    <div class="d-flex align-items-center">
+                                        <div class="mr-0">
+                                            <h:graphicImage value="#{association.profilePic}" class="rounded-circle side-profile-pic" rendered="#{association.profilePic!=null}"/>
+                                            <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{association.profilePic==null}"/>
+                                        </div>
+                                        <div class="ml-2">
+                                            <div class="h5 m-0"><a href="">#{association.name}</a></div>
+                                        </div>
                                     </div>
                                 </div>
                             </ui:repeat>

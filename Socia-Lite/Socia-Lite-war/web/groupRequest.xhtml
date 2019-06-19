@@ -100,16 +100,19 @@ and open the template in the editor.
                  <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
                         <div class="panel-heading">Friends</div>
-                        <div class="panel-body friend-content" style="overflow-y: scroll; ">
+                        <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.userList}" var="friend">
-                                <div class="d-flex align-items-center">
-                                        <div class="mr-0">
-                                            <!--Profile pic-->
-                                        </div>
-                                        <div class="ml-2">
-                                            <div class="h5 m-0"><a href=">">#{friend.nickname}</a></div>
-                                            <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
-                                        </div>
+                                <div class="card gefg-card-side">
+                                    <div class="d-flex align-items-center">
+                                            <div class="mr-0">
+                                                <h:graphicImage value="#{association.profilePic}" class="rounded-circle side-profile-pic" rendered="#{friend.profilePic!=null}"/>
+                                                <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{friend.profilePic==null}"/>
+                                            </div>
+                                            <div class="ml-2">
+                                                <div class="h5 m-0"><a href=">">#{friend.nickname}</a></div>
+                                                <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
+                                            </div>
+                                    </div>
                                 </div>
                             </ui:repeat>
                         </div>
@@ -117,52 +120,58 @@ and open the template in the editor.
                  </div>
                 <!-- Barra grupos -->
                 <div class="col-sm text-left feed">
-                    <div class="btn-group" role="group">
+                    <div class="btn-group btn-group-bar" role="group">
                         <h:link outcome="groups" class="btn btn-selection btn-default">My groups</h:link>
                         <h:link outcome="findGroups" class="btn btn-selection btn-default">Find groups</h:link>
                         <h:link outcome="groupRequest" class="btn btn-selection btn-selected">Group request 
-                            <span class="badge badge-danger">1</span>
                         </h:link>
                     </div>
                     <ui:repeat value="#{userBean.user.associationList1}" var="association">
-                        <p>#{association.name}<span class="badge badge-danger">#{association.associationRequestList.size()}</span></p>
-                        <ui:repeat value="#{association.associationRequestList}" var="request">
-                            <div class="card gedf-card mt-0 mb-3" style="width: 100%;">     
-                            <div class="d-flex justify-content-between align-items-center">
+                        <ui:fragment rendered="#{association.associationRequestList.size() > 0}">
+                            <p>#{association.name}<span class="badge badge-danger">#{association.associationRequestList.size()}</span></p>
+                            <ui:repeat value="#{association.associationRequestList}" var="associationRequest">
+                                <div class="card gedf-card mt-0 mb-3">     
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="m-2">
-                                        <!-- Imagen de perfil -->
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="m-2">
+                                            <!-- Imagen de perfil -->
+                                            <h:graphicImage value="#{associationRequest.userSender.profilePic}" class="rounded-circle card-profile-pic" rendered="#{associationRequest.userSender.profilePic!=null}"/>
+                                            <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle card-profile-pic" rendered="#{associationRequest.userSender.profilePic==null}"/>
+                                        </div>
+                                        <div class="ml-2">
+                                            <div class="h5 m-0"><a href="">#{associationRequest.userSender.nickname}</a></div>
+                                            <div class="h7 text-muted">#{associationRequest.userSender.name} #{associationRequest.userSender.surname}</div>
+                                        </div>
                                     </div>
-                                    <div class="ml-2">
-                                        <div class="h5 m-0"><a href="">#{request.userSender.nickname}</a></div>
-                                        <div class="h7 text-muted">#{request.userSender.name} #{friendshipRequest.userSender.surname}</div>
+                                    <div>
+                                        <div class="btn-group btn-group-justified m-2 mr-4" >
+                                            <h:form>
+                                                <h:commandButton class="btn btn-xs btn-primary" value="Accept" action="#{userBean.denyGroupRequest(associationRequest)}"/>
+                                                <h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{userBean.acceptGroupRequest(associationRequest)}"/>
+                                            </h:form>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="btn-group btn-group-justified m-2 mr-4" >
-                                        <h:form>
-                                            <h:commandButton class="btn btn-xs btn-primary" value="Accept" action="#{userBean.denyGroupRequest(request)}"/>
-                                            <h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{userBean.acceptGroupRequest(request)}"/>
-                                        </h:form>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                        </ui:repeat>
+                                </div> 
+                            </div>
+                            </ui:repeat>
+                        </ui:fragment>
                     </ui:repeat>
                 </div>
                 <!-- Menú lateral de grupos -->
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
                         <div class="panel-heading">Groups</div>
-                        <div class="panel-body friend-content" style="overflow-y: scroll; ">
+                        <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.associationList}" var="association">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-0">
-                                        <!--Profile pic-->
-                                    </div>
-                                    <div class="ml-2">
-                                        <div class="h5 m-0"><a href="">#{association.name}</a></div>
+                                <div class="card gefg-card-side">
+                                    <div class="d-flex align-items-center">
+                                        <div class="mr-0">
+                                            <h:graphicImage value="#{association.profilePic}" class="rounded-circle side-profile-pic" rendered="#{association.profilePic!=null}"/>
+                                            <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{association.profilePic==null}"/>
+                                        </div>
+                                        <div class="ml-2">
+                                            <div class="h5 m-0"><a href="">#{association.name}</a></div>
+                                        </div>
                                     </div>
                                 </div>
                             </ui:repeat>

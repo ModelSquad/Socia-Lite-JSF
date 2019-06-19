@@ -37,33 +37,6 @@ and open the template in the editor.
         <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
         <!-- Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
-        <script>
-            jQuery.fn.animateAuto = function(prop, speed, callback){
-        var elem, height, width;
-        return this.each(function(i, el){
-            el = jQuery(el), elem = el.clone().css({"height":"auto","width":"auto"}).appendTo("body");
-            height = elem.css("height"),
-            width = elem.css("width"),
-            elem.remove();
-
-            if(prop === "height")
-                el.animate({"height":height}, speed, callback);
-            else if(prop === "width")
-                el.animate({"width":width}, speed, callback);  
-            else if(prop === "both")
-                el.animate({"width":width,"height":height}, speed, callback);
-        });  
-            }
-            $(window).ready(function(){
-                    $('.expand-card').click(function(){
-                            if($(this).next().hasClass('desplegado')){
-                                    $(this).next().removeClass('desplegado').animate({height:0},500);
-                            }else{
-                                    $(this).next().addClass('desplegado').animateAuto("height",500);
-                            }
-                    })
-            })
-    </script>
     </h:head>
     <body>
       <h:outputStylesheet library="stylesheets" name="friends.css"/>
@@ -127,16 +100,19 @@ and open the template in the editor.
                  <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
                         <div class="panel-heading">Friends</div>
-                        <div class="panel-body friend-content" style="overflow-y: scroll; ">
+                        <div class="panel-body friend-content">
                             <ui:repeat value="#{userBean.user.userList}" var="friend">
-                                <div class="d-flex align-items-center">
-                                        <div class="mr-0">
-                                            <!--Profile pic-->
-                                        </div>
-                                        <div class="ml-2">
-                                            <div class="h5 m-0"><a href=">">#{friend.nickname}</a></div>
-                                            <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
-                                        </div>
+                                <div class="card gefg-card-side">
+                                    <div class="d-flex align-items-center">
+                                            <div class="mr-0">
+                                                <h:graphicImage value="#{association.profilePic}" class="rounded-circle side-profile-pic" rendered="#{friend.profilePic!=null}"/>
+                                                <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{friend.profilePic==null}"/>
+                                            </div>
+                                            <div class="ml-2">
+                                                <div class="h5 m-0"><a href=">">#{friend.nickname}</a></div>
+                                                <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
+                                            </div>
+                                    </div>
                                 </div>
                             </ui:repeat>
                         </div>
@@ -144,19 +120,23 @@ and open the template in the editor.
                  </div>
                 <!-- Barra grupos -->
                 <div class="col-sm text-left feed">
-                    <div class="btn-group" role="group">
+                    <div class="btn-group btn-group-bar" role="group">
                         <h:link outcome="groups" class="btn btn-selection btn-selected">My groups</h:link>
                         <h:link outcome="findGroups" class="btn btn-selection btn-default">Find groups</h:link>
                         <h:link outcome="groupRequest" class="btn btn-selection btn-default">Group request 
-                            <span class="badge badge-danger">1</span>
+                            <ui:fragment rendered="#{false}">
+                                <span class="badge badge-danger" > #{userBean.user.friendshipRequestList.size()}</span>
+                            </ui:fragment>
                         </h:link>
                     </div>
                     <ui:repeat value="#{userBean.user.associationList}" var="association">
-                        <div class="card gedf-card expand-card m-0" style="width: 100%;">     
+                        <div class="card gedf-card mt-0 mb-3">     
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="m-2">
                                         <!-- Imagen de perfil -->
+                                        <h:graphicImage value="#{association.profilePic}" class="rounded-circle card-profile-pic" rendered="#{association.profilePic!=null}"/>
+                                        <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle card-profile-pic" rendered="#{association.profilePic==null}"/>
                                     </div>
                                     <div class="ml-2">
                                        
@@ -198,7 +178,7 @@ and open the template in the editor.
                         <h:commandLink
                             onclick="$('#modalCreateGroup').modal('show');" immediate="true">
                             <i class="material-icons m-2" style="font-size:40px;">add_circle</i>Create Group
-                            <f:ajax execute="@this" render=":formModal"/>
+                            <f:ajax render=":formModal"/>
                         </h:commandLink>
                         </h:form>
                     </div>
@@ -214,17 +194,15 @@ and open the template in the editor.
                                                 </h:button>
                                         </div>
                                         <div class="modal-body mx-3">
-                                            <form action="CreateGroupServlet" method="post" id="associationForm">
-                                                <div class="md-form mb-5">
-                                                    <label> Name </label>
-                                                    <h:inputText value="#{createGroupBean.name}" class="form-control"/>
-                                                </div>
-                                                <div class="md-form mb-4">
-                                                    <label>Description</label>
-                                                    <h:inputText value="#{createGroupBean.description}" class="form-control"/>
-                                                </div>
-                                                <h:commandButton  action="#{createGroupBean.createGroup()}" value="Create" class="btn btn-indigo"/>
-                                            </form>
+                                            <div class="md-form mb-5">
+                                                <label> Name </label>
+                                                <h:inputText value="#{createGroupBean.name}" class="form-control"/>
+                                            </div>
+                                            <div class="md-form mb-4">
+                                                <label>Description</label>
+                                                <h:inputText value="#{createGroupBean.description}" class="form-control"/>
+                                            </div>
+                                            <h:commandButton  action="#{createGroupBean.createGroup()}" value="Create" class="btn btn-indigo"/>
                                         </div>
                                     </div>
                                 </div>
@@ -263,14 +241,17 @@ and open the template in the editor.
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
                         <div class="panel-heading">Groups</div>
-                        <div class="panel-body friend-content" style="overflow-y: scroll; ">
-                            <ui:repeat value="#{userBean.user.associationList}" var="associationSide">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-0">
-                                        <!--Profile pic-->
-                                    </div>
-                                    <div class="ml-2">
-                                        <div class="h5 m-0"><a href="">#{associationSide.name}</a></div>
+                        <div class="panel-body friend-content">
+                            <ui:repeat value="#{userBean.user.associationList}" var="association">
+                                <div class="card gefg-card-side">
+                                    <div class="d-flex align-items-center">
+                                        <div class="mr-0">
+                                            <h:graphicImage value="#{association.profilePic}" class="rounded-circle side-profile-pic" rendered="#{association.profilePic!=null}"/>
+                                            <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{association.profilePic==null}"/>
+                                        </div>
+                                        <div class="ml-2">
+                                            <div class="h5 m-0"><a href="">#{association.name}</a></div>
+                                        </div>
                                     </div>
                                 </div>
                             </ui:repeat>
