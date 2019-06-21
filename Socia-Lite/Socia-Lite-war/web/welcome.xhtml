@@ -199,10 +199,10 @@
                                             <h:panelGroup class="text-muted h7 mb-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> #{post.date} </h:panelGroup><br/>
 
                                             <h:link class="card-link">
-                                                <h:outputText class="card-title" value="#{post.title}"></h:outputText>
+                                                <h:outputText style="font-size: 20px;" class="card-title" value="#{post.title}"></h:outputText>
                                             </h:link><br/>
 
-                                            <div id="carouselIndicator" class="carousel slide" data-ride="carousel" data-interval="2000">
+                                            <div id="carouselIndicator" class="carousel slide carousel-body" data-ride="carousel" data-interval="2000">
                                                 <ol class="carousel-indicators">
                                                     <c:forEach var="i" begin="0" end="#{post.mediaList.size()-1}">  
                                                         <c:if test="#{i==0}">

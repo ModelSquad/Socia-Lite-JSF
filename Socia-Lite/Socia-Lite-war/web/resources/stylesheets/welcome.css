@@ -398,3 +398,8 @@ body {
     margin-right: 50%;
 }
 
+/* Carousel */
+.carousel-body{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
