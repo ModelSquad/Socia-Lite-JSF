@@ -45,7 +45,7 @@ public class PostServlet extends HttpServlet {
             } else {
                 
                 request.setAttribute("association", associationFacade.find(Integer.valueOf(groupId)));
-                request.setAttribute("posts", postFacade.findPostsByGroup(groupId));
+                request.setAttribute("posts", postFacade.findPostsByGroup(Integer.parseInt(groupId)));
             }
 
             RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/welcome.jsp");
