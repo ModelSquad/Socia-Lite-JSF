@@ -152,82 +152,91 @@
                         </h:form>
                         <h:form id="post-form">
                             <h:panelGroup id="post-list">
-                            <ui:repeat value="#{postsBean.postList}" var="post">
-                                <div class="card gedf-card " style="width: 100%;">
-                                    <div class="card-header">
-                                        <div class="d-flex justify-content-between align-items-center">
+                                <c:forEach items="#{postsBean.postList}" var="post">
+                                    <div class="card gedf-card " style="width: 100%;">
+                                        <div class="card-header">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <c:choose>
-                                                    <c:when test="#{post.user.profilePic == null}">
-                                                        <h:panelGroup class="mr-2">
-                                                            <h:graphicImage class="rounded-circle" width="45" value="https://cdn.clipart.email/0ad2ce5b5370f2d91ef8b465f6770e77_people-icons-3800-free-files-in-png-eps-svg-format_338-338.jpeg" /> 
-                                                        </h:panelGroup> 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <h:panelGroup class="mr-2">
-                                                            <h:graphicImage class="rounded-circle" width="45" value="#{post.user.profilePic}" /> 
-                                                        </h:panelGroup>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <div class="ml-2">
-                                                    <h:panelGroup class="h5 m-0">@#{post.user.nickname}</h:panelGroup>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <c:choose>
+                                                        <c:when test="#{post.user.profilePic == null}">
+                                                            <h:panelGroup class="mr-2">
+                                                                <h:graphicImage class="rounded-circle" width="45" value="https://cdn.clipart.email/0ad2ce5b5370f2d91ef8b465f6770e77_people-icons-3800-free-files-in-png-eps-svg-format_338-338.jpeg" /> 
+                                                            </h:panelGroup> 
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <h:panelGroup class="mr-2">
+                                                                <h:graphicImage class="rounded-circle" width="45" value="#{post.user.profilePic}" /> 
+                                                            </h:panelGroup>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <div class="ml-2">
+                                                        <h:panelGroup class="h5 m-0">@#{post.user.nickname}</h:panelGroup>
 
-                                                    <h:panelGroup class="h7 text-muted">#{post.user.name}#{post.user.surname}</h:panelGroup>
-                                                </div>
-                                            </div>
-                                            <h:panelGroup rendered="#{post.user.idUser.equals(loginSessionBean.loggedUser.idUser)}">
-                                                <div class="dropdown">
-                                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-h"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                                        <div class="h6 dropdown-header">#{msgs.post_options}</div>
-                                                        <h:commandLink class="dropdown-item" value="#{msgs.post_delete}">
-                                                            <f:ajax render="post-form:post-list" listener="#{postsBean.deletePost(post)}"/>
-                                                        </h:commandLink>
-                                                        <h:commandLink class="dropdown-item" action="#{postsBean.editPost(post)}" value="#{msgs.post_edit}"/>
+                                                        <h:panelGroup class="h7 text-muted">#{post.user.name}#{post.user.surname}</h:panelGroup>
                                                     </div>
                                                 </div>
-                                            </h:panelGroup>
+                                                <h:panelGroup rendered="#{post.user.idUser.equals(loginSessionBean.loggedUser.idUser)}">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fa fa-ellipsis-h"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                                            <div class="h6 dropdown-header">#{msgs.post_options}</div>
+                                                            <h:commandLink onclick="if (!confirm('#{msgs.post_delete_alert}'))
+                                                                        return false" class="dropdown-item" value="#{msgs.post_delete}">
+                                                                <f:ajax render="post-form:post-list" listener="#{postsBean.deletePost(post)}"/>
+                                                            </h:commandLink>
+                                                            <h:commandLink class="dropdown-item" action="#{postsBean.editPost(post)}" value="#{msgs.post_edit}"/>
+                                                        </div>
+                                                    </div>
+                                                </h:panelGroup>
+                                            </div>
                                         </div>
+                                        <h:panelGroup class="card-body">
+                                            <h:panelGroup class="text-muted h7 mb-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> #{post.date} </h:panelGroup><br/>
+
+                                            <h:link class="card-link">
+                                                <h:outputText class="card-title" value="#{post.title}"></h:outputText>
+                                            </h:link><br/>
+
+                                            <div id="carouselIndicator" class="carousel slide" data-ride="carousel" data-interval="2000">
+                                                <ol class="carousel-indicators">
+                                                    <c:forEach var="i" begin="0" end="#{post.mediaList.size()-1}">  
+                                                        <c:if test="#{i==0}">
+                                                            <li data-target="#carouselIndicator" data-slide-to="#{i}" class="active"></li>
+                                                        </c:if>
+                                                        <c:if test="#{i>0}">
+                                                            <li data-target="#carouselIndicator" data-slide-to="#{i}" class=""></li>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </ol>
+                                                <h:panelGroup class="carousel-inner">
+                                                    <c:forEach var="i" begin="0" end="#{post.mediaList.size()-1}">             
+                                                        <c:if test="#{i==0}">
+                                                            <h:panelGroup class="carousel-item active post-image">
+                                                                <h:link p:data-fancybox="gallery" p:href="#{post.mediaList.toArray()[i].getMediaUrl()}">
+                                                                    <h:graphicImage class="post-image" value="#{post.mediaList.toArray()[i].getMediaUrl()}" />
+                                                                </h:link>
+                                                            </h:panelGroup>
+                                                        </c:if>
+                                                        <c:if test="#{i>0}">
+                                                            <h:panelGroup class="carousel-item post-image">
+                                                                <h:link p:data-fancybox="gallery" p:href="#{post.mediaList.toArray()[i].getMediaUrl()}">
+                                                                    <h:graphicImage class="post-image" value="#{post.mediaList.toArray()[i].getMediaUrl()}"/>
+                                                                </h:link>
+                                                            </h:panelGroup>
+                                                        </c:if>
+
+                                                    </c:forEach>
+                                                </h:panelGroup>
+                                            </div>
+
+                                            <h:outputText class="card-text" value="#{post.text}"/>
+                                        </h:panelGroup>
                                     </div>
-                                    <h:panelGroup class="card-body">
-                                        <h:panelGroup class="text-muted h7 mb-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> #{post.date} </h:panelGroup><br/>
-
-                                        <h:link class="card-link">
-                                            <h:outputText class="card-title" value="#{post.title}"></h:outputText>
-                                        </h:link><br/>
-                                        <h:outputText class="card-text" value="#{post.text}"/>
-                                    </h:panelGroup>
-                                </div>
-                            </ui:repeat>
-                                </h:panelGroup>
-                        </h:form>
-
-                        <!--
-                                                            <div id="confirm-delete" class="modal fade">
-                                                                <div class="modal-dialog modal-confirm">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <div class="icon-box">
-                                                                                <i class="material-icons">&#xE5CD;</i>
-                                                                            </div>				
-                                                                            <h4 class="modal-title">Are you sure?</h4>	
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <p>Do you really want to delete this post? This process cannot be undone.</p>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                                                                            <a id="delete-btn" class="btn btn-danger btn-ok">Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                        
-                                                            </div>
-                        -->                    
+                                </c:forEach>
+                            </h:panelGroup>
+                        </h:form>                   
                     </div>
                     <div class="col-sm-2 sidenav">
                         <div class="panel panel-primary friend-panel m-2">
