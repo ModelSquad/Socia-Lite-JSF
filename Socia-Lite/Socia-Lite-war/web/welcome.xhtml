@@ -124,22 +124,25 @@
                             <h:commandButton rendered="false" action="#{postsBean.chargeGroupFeed(1)}" value="group"/><br/> 
                             <div class="jumbotron jumbotron-post">
                                 <h4>#{msgs.newPost_boxTitle}</h4>
-                                <h:inputText value="#{postsBean.newPostTitle}" id="title" class="form-control post-title" p:placeholder="#{msgs.newPost_titlePlaceholder}"/>
-                                <h:inputTextarea value="#{postsBean.newPostText}" id="post-text" class="form-control text-area-post post-actions" p:placeholder="#{msgs.newPost_bodyPlaceholder}"></h:inputTextarea>
+                                <h:inputText value="#{addPostsBean.newPostTitle}" id="title" class="form-control post-title" p:placeholder="#{msgs.newPost_titlePlaceholder}">
+                                </h:inputText>
+                                <h:inputTextarea value="#{addPostsBean.newPostText}" id="post-text" class="form-control text-area-post post-actions" p:placeholder="#{msgs.newPost_bodyPlaceholder}">
+                                </h:inputTextarea>
                                 <div class="btn-group post-actions post-visibility" role="group">
                                     <div class="input-group">
                                         <div id="radioBtn" class="btn-group">
                                             <a class="btn btn-primary btn-sm active" data-toggle="visibility" data-title="public">#{msgs.newPost_friendsButton}</a>
                                             <a class="btn btn-primary btn-sm notActive" data-toggle="visibility" data-title="private">#{msgs.newPost_privateButton}</a>
                                         </div>
-                                        <h:inputHidden value="#{postsBean.newPostVisibility}" p:id="visibility"></h:inputHidden>
+                                        <h:inputHidden value="#{addPostsBean.newPostVisibility}" p:id="visibility"></h:inputHidden>
                                     </div>
                                 </div>
                                 <div class="btn-group post-button post-actions" role="group">
                                     <label class="btn btn-post">
-                                        #{msgs.newPost_uploadPictureButton} <h:inputFile value="#{postsBean.newPostPictures}" p:id="img-upload" p:hidden="true" p:multiple="multiple"></h:inputFile>
+                                        #{msgs.newPost_uploadPictureButton} <h:inputFile value="#{addPostsBean.newPostPictures}" p:id="img-upload" p:hidden="true" p:multiple="multiple"></h:inputFile>
                                     </label>
-                                    <h:commandButton action="#{postsBean.submitPost()}" type="submit" class="btn btn-post btn-send" value="#{msgs.newPost_sendButton}"></h:commandButton>
+                                    <h:commandButton action="#{addPostsBean.submitPost()}" type="submit" class="btn btn-post btn-send" value="#{msgs.newPost_sendButton}">
+                                    </h:commandButton>
                                 </div>
                                 <div class="row post-row">
                                     <h:graphicImage p:id="img-0" class="img-preview" value="https://zenit.org/wp-content/uploads/2018/05/no-image-icon.png"/>

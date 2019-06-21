@@ -40,7 +40,7 @@ import socialite.entity.Post;
  *
  * @author jaysus
  */
-@Named(value = "AddPostsBean")
+@Named(value = "addPostsBean")
 @ViewScoped
 public class AddPostsBean implements Serializable {
 
@@ -152,27 +152,29 @@ public class AddPostsBean implements Serializable {
         this.newPostPictures = newPostPictures;
     }
     
-    public void submitPost() {        
-        Post post = new Post();
-        post.setDate(new Date());
-        post.setText(newPostText);
-        post.setVisibility((newPostVisibility.equalsIgnoreCase("public")) ? visibilityFacade.find(1) : visibilityFacade.find(2));
-        post.setUser(loginSessionBean.getLoggedUser());
-        post.setTitle(newPostTitle);
-        postFacade.create(post);
-        if(newPostPictures != null) {
-            try {
-                uploadPictures(newPostPictures, post);
-            } catch (IOException|DbxException|ServletException ex) {
-                Logger.getLogger(AddPostsBean.class.getName()).log(Level.SEVERE, null, ex.getLocalizedMessage());
+    
+    public void submitPost() {   
+        if(!(newPostTitle.isEmpty()) && !(newPostText.isEmpty())) {
+            Post post = new Post();
+            post.setDate(new Date());
+            post.setText(newPostText);
+            post.setVisibility((newPostVisibility.equalsIgnoreCase("public")) ? visibilityFacade.find(1) : visibilityFacade.find(2));
+            post.setUser(loginSessionBean.getLoggedUser());
+            post.setTitle(newPostTitle);
+            postFacade.create(post);
+            if(newPostPictures != null) {
+                try {
+                    uploadPictures(newPostPictures, post);
+                } catch (IOException|DbxException|ServletException ex) {
+                    Logger.getLogger(AddPostsBean.class.getName()).log(Level.SEVERE, null, ex.getLocalizedMessage());
+                }
             }
+
+            newPostTitle = newPostText = "";
+            newPostVisibility = "public";
+            newPostPictures = null;
+            this.init();
         }
-        
-        
-        newPostTitle = newPostText = "";
-        newPostVisibility = "public";
-        newPostPictures = null;
-        this.init();
     }
     /*
     public void deletePost(Post post){
