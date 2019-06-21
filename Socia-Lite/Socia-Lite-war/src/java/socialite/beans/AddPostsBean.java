@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -40,9 +40,9 @@ import socialite.entity.Post;
  *
  * @author jaysus
  */
-@Named(value = "postsBean")
-@SessionScoped
-public class PostsBean implements Serializable {
+@Named(value = "addPostsBean")
+@ViewScoped
+public class AddPostsBean implements Serializable {
 
     @EJB
     private AssociationFacade associationFacade;
@@ -52,10 +52,12 @@ public class PostsBean implements Serializable {
     private String newPostVisibility;
     private Part newPostPictures;
     private List<Post> postList;
+    /*
     private Post postSelected;
     private Association associationSelected;
+    */
 
-
+    /*
     public Post getPostSelected() {
         return postSelected;
     }
@@ -63,6 +65,7 @@ public class PostsBean implements Serializable {
     public void setPostSelected(Post postSelected) {
         this.postSelected = postSelected;
     }
+    */
 
     @EJB
     private VisibilityFacade visibilityFacade;
@@ -73,8 +76,6 @@ public class PostsBean implements Serializable {
       @EJB
     private MediaFacade mediaFacade;
     
-    
-      
     private static final String ACCESS_TOKEN = "3wQ3NmRIRPAAAAAAAAAADR3SEijLf_rodEXbuypIw0ubDuUyjZ-bDPvuA9-qdgEv";
     
     @Inject
@@ -85,6 +86,7 @@ public class PostsBean implements Serializable {
         newPostTitle = newPostText = "";
         newPostVisibility = "public";
         newPostPictures = null;
+        /*
         if(this.associationSelected==null){
         List<Integer> ids = new ArrayList<>();
         Integer idUser = this.loginSessionBean.getLoggedUser().getIdUser();
@@ -97,8 +99,10 @@ public class PostsBean implements Serializable {
         else{
             this.postList = this.postFacade.findPostsByGroup(this.associationSelected.getIdAssociation());
         }
+        */
     }
 
+    /*
     public Association getAssociationSelected() {
         return associationSelected;
     }
@@ -106,6 +110,7 @@ public class PostsBean implements Serializable {
     public void setAssociationSelected(Association associationSelected) {
         this.associationSelected = associationSelected;
     }
+    */
     
     public String getNewPostTitle() {
         return newPostTitle;
@@ -147,44 +152,40 @@ public class PostsBean implements Serializable {
         this.newPostPictures = newPostPictures;
     }
     
-    /**
-     * Creates a new instance of PostsBean
-     */
-    public PostsBean() {
-    }
     
-    public void submitPost() {        
-        Post post = new Post();
-        post.setDate(new Date());
-        post.setText(newPostText);
-        post.setVisibility((newPostVisibility.equalsIgnoreCase("public")) ? visibilityFacade.find(1) : visibilityFacade.find(2));
-        post.setUser(loginSessionBean.getLoggedUser());
-        post.setTitle(newPostTitle);
-        postFacade.create(post);
-        if(newPostPictures != null) {
-            try {
-                uploadPictures(newPostPictures, post);
-            } catch (IOException|DbxException|ServletException ex) {
-                Logger.getLogger(PostsBean.class.getName()).log(Level.SEVERE, null, ex.getLocalizedMessage());
+    public void submitPost() {   
+        if(!(newPostTitle.isEmpty()) && !(newPostText.isEmpty())) {
+            Post post = new Post();
+            post.setDate(new Date());
+            post.setText(newPostText);
+            post.setVisibility((newPostVisibility.equalsIgnoreCase("public")) ? visibilityFacade.find(1) : visibilityFacade.find(2));
+            post.setUser(loginSessionBean.getLoggedUser());
+            post.setTitle(newPostTitle);
+            postFacade.create(post);
+            if(newPostPictures != null) {
+                try {
+                    uploadPictures(newPostPictures, post);
+                } catch (IOException|DbxException|ServletException ex) {
+                    Logger.getLogger(AddPostsBean.class.getName()).log(Level.SEVERE, null, ex.getLocalizedMessage());
+                }
             }
+
+            newPostTitle = newPostText = "";
+            newPostVisibility = "public";
+            newPostPictures = null;
+            this.init();
         }
-        
-        
-        newPostTitle = newPostText = "";
-        newPostVisibility = "public";
-        newPostPictures = null;
-        this.init();
     }
-    
+    /*
     public void deletePost(Post post){
         this.postFacade.remove(post);
         init();
-    }
-    
+    }*/
+    /*
     public String editPost(Post post){
         this.postSelected = post;
         return "editPost";
-    }
+    }*/
     
     private static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -221,16 +222,17 @@ public class PostsBean implements Serializable {
         post.setMediaList(media);
         postFacade.edit(post);
     }
-    
+    /*
     public String chargeGroupFeed(Integer idGroup){
         this.associationSelected = this.associationFacade.find(idGroup);
         this.init();
         return null;
-    }
+    }*/
+    /*
     
     public String reset(){
         this.associationSelected = null;
         this.init();
         return "welcome";
-    }
+    }*/
 }

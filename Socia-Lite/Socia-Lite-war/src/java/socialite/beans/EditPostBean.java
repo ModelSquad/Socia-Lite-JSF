@@ -26,13 +26,13 @@ public class EditPostBean {
     private VisibilityFacade visibilityFacade;
 
     @Inject
-    PostsBean postBean;
+    AddPostsBean postBean;
 
-    public PostsBean getPostBean() {
+    public AddPostsBean getPostBean() {
         return postBean;
     }
 
-    public void setPostBean(PostsBean postBean) {
+    public void setPostBean(AddPostsBean postBean) {
         this.postBean = postBean;
     }
 
@@ -71,7 +71,7 @@ public class EditPostBean {
     
     @PostConstruct
     public void init(){
-        this.postSelected = this.getPostBean().getPostSelected();
+        //this.postSelected = this.getPostBean().getPostSelected();
         this.postVisibility = (this.postSelected.getVisibility().getIdVisibility()==1) ? "public" : "private";
     }
     

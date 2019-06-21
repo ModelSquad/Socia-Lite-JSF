@@ -101,7 +101,7 @@ public class UserBean implements Serializable {
             uploadPictures(profilePicture);
             confirmChange=false;
         } catch (IOException|DbxException|ServletException ex) {
-                Logger.getLogger(PostsBean.class.getName()).log(Level.SEVERE, null, ex.getLocalizedMessage());
+                Logger.getLogger(AddPostsBean.class.getName()).log(Level.SEVERE, null, ex.getLocalizedMessage());
         }
         return null;
     }
