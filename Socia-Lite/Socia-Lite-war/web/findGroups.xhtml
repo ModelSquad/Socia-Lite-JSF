@@ -133,7 +133,7 @@ and open the template in the editor.
                         </h:link>
                     </div>
                     <!-- Aquí van los groups (repeat) -->
-                    <ui:repeat value="#{userBean.findGroups}" var="association">
+                    <ui:repeat value="#{groupsBean.findGroups}" var="association">
                         <div class="card gedf-card mt-0 mb-3">     
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -149,7 +149,7 @@ and open the template in the editor.
                                 <div>
                                     <div class="btn-group btn-group-justified m-2 mr-4" >
                                         <h:form>
-                                            <h:commandLink class="btn btn-xs btn-primary" action="#{userBean.sendGroupRequest(association)}"><h:outputText value="#{msgs.send_group_request}"/></h:commandLink>
+                                            <h:commandLink class="btn btn-xs btn-primary" action="#{groupsBean.sendGroupRequest(association)}"><h:outputText value="#{msgs.send_group_request}"/></h:commandLink>
                                         </h:form>
                                     </div>
                                 </div>

@@ -46,11 +46,9 @@ import socialite.entity.Media;
 @SessionScoped
 public class UserBean implements Serializable {
 
-
-
-
     @Inject
     private LoginSessionBean loginSessionBean;
+    
     private User user;    
     @EJB
     private UserFacade userFacade;
@@ -76,6 +74,10 @@ public class UserBean implements Serializable {
     
     public User getUser(){
         return user;
+    }
+    
+    public void setUser(User user){
+        this.user = user;
     }
     
     public Part getProfilePicture() {
@@ -217,66 +219,7 @@ public class UserBean implements Serializable {
         return "";
     }
     
-    public List<Association> getFindGroups(){
-        return associationFacade.findNotAssociation(user);
-    }
     
-    
-    public String sendGroupRequest(Association association){
-        AssociationRequest request = new AssociationRequest();
-        request.setUserSender(user);
-        request.setAssociationReceiver(association);
-        request.setDateTime(new java.sql.Date(System.currentTimeMillis()));
-        List<AssociationRequest> requests = this.user.getAssociationRequestList();
-        requests.add(request);
-        this.user.setAssociationRequestList(requests);
-        requests = association.getAssociationRequestList();
-        requests.add(request);
-        association.setAssociationRequestList(requests);
-        this.associationFacade.edit(association);
-        this.userFacade.edit(user);
-        this.associationRequestFacade.create(request);
-        this.user = userFacade.find(user.getIdUser());
-        return "";
-    }
-    
-    public String acceptGroupRequest(AssociationRequest associationRequest){
-        Association association = associationRequest.getAssociationReceiver();
-        User sender = associationRequest.getUserSender();
-        List<User> members = association.getUserList();
-        members.add(sender);
-        association.setUserList(members);
-        List<Association> associations = sender.getAssociationList();
-        associations.add(association);
-        sender.setAssociationList(associations);
-        List<AssociationRequest> requests = association.getAssociationRequestList();
-        requests.remove(associationRequest);
-        association.setAssociationRequestList(requests);
-        requests = sender.getAssociationRequestList();
-        requests.remove(associationRequest);
-        sender.setAssociationRequestList(requests);
-        userFacade.edit(sender);
-        associationFacade.edit(association);
-        associationRequestFacade.remove(associationRequest);
-        this.user = userFacade.find(user.getIdUser());
-        return "";
-    }
-    
-    public String denyGroupRequest(AssociationRequest associationRequest){
-        Association association = associationRequest.getAssociationReceiver();
-        User sender = associationRequest.getUserSender();
-        List<AssociationRequest> requests = association.getAssociationRequestList();
-        requests.remove(associationRequest);
-        association.setAssociationRequestList(requests);
-        requests = sender.getAssociationRequestList();
-        requests.remove(associationRequest);
-        sender.setAssociationRequestList(requests);
-        associationFacade.edit(association);
-        userFacade.edit(sender);
-        associationRequestFacade.remove(associationRequest);
-        this.user = userFacade.find(user.getIdUser());
-        return "";
-    }
     
     private static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();

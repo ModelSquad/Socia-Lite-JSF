@@ -22,10 +22,12 @@ public class SignOutBean {
      */
     public SignOutBean() {        
     }
+    
     public String signOut(){       
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("LoginSessionBean", null);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("UserBean", null);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("PostsBean", null);
         return "index";
     }
     

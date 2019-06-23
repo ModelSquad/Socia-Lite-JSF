@@ -155,7 +155,7 @@ and open the template in the editor.
                                 <div>
                                     <div class="btn-group btn-group-justified m-2 mr-4" >
                                         <h:form rendered="#{association.userList.size() == 1 || !association.admin.idUser.equals(userBean.user.idUser)}">
-                                            <h:commandLink class="btn btn-xs btn-danger" action="#{deleteGroupBean.deleteGroup2(association)}"><h:outputText value="#{msgs.delete_group}"/></h:commandLink>
+                                            <h:commandLink class="btn btn-xs btn-danger" action="#{groupsBean.deleteGroup(association)}"><h:outputText value="#{msgs.delete_group}"/></h:commandLink>
                                         </h:form>
                                     </div>
                                 </div>
@@ -196,18 +196,18 @@ and open the template in the editor.
                                         <div class="modal-body mx-3">
                                             <div class="md-form mb-5">
                                                 <label> <h:outputText value="#{msgs.name}"/> </label>
-                                                <h:inputText id="name" value="#{createGroupBean.name}" class="form-control" required="true"
+                                                <h:inputText id="name" value="#{groupsBean.name}" class="form-control" required="true"
                                                              requiredMessage="Name is required"/>
                                                 <h:message for="name" style="color:red"/> <p></p>
                                                 
                                             </div>
                                             <div class="md-form mb-4">
                                                 <label><h:outputText value="#{msgs.description}"/></label>
-                                                <h:inputText id="description" value="#{createGroupBean.description}" class="form-control" required="true"
+                                                <h:inputText id="description" value="#{groupsBean.description}" class="form-control" required="true"
                                                              requiredMessage="Description is required"/>
                                                 <h:message for="description" style="color:red"/> <p></p>
                                             </div>
-                                            <h:commandLink  action="#{createGroupBean.createGroup()}" class="btn btn-indigo"><h:outputText value="#{msgs.create}"/></h:commandLink>
+                                            <h:commandLink  action="#{groupsBean.createGroup()}" class="btn btn-indigo"><h:outputText value="#{msgs.create}"/></h:commandLink>
                                         </div>
                                     </div>
                                 </div>
