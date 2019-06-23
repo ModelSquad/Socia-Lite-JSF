@@ -32,7 +32,6 @@ import socialite.dao.AssociationFacade;
 import socialite.dao.MediaFacade;
 import socialite.dao.PostFacade;
 import socialite.dao.VisibilityFacade;
-import socialite.entity.Association;
 import socialite.entity.Media;
 import socialite.entity.Post;
 
@@ -47,33 +46,22 @@ public class AddPostsBean implements Serializable {
     @EJB
     private AssociationFacade associationFacade;
 
+    @Inject
+    private PostsBean postsBean;
+    
     private String newPostTitle;
     private String newPostText;
     private String newPostVisibility;
     private Part newPostPictures;
     private List<Post> postList;
-    /*
-    private Post postSelected;
-    private Association associationSelected;
-    */
-
-    /*
-    public Post getPostSelected() {
-        return postSelected;
-    }
-
-    public void setPostSelected(Post postSelected) {
-        this.postSelected = postSelected;
-    }
-    */
-
+    
     @EJB
     private VisibilityFacade visibilityFacade;
     
     @EJB
     private PostFacade postFacade;
     
-      @EJB
+    @EJB
     private MediaFacade mediaFacade;
     
     private static final String ACCESS_TOKEN = "3wQ3NmRIRPAAAAAAAAAADR3SEijLf_rodEXbuypIw0ubDuUyjZ-bDPvuA9-qdgEv";
@@ -86,31 +74,7 @@ public class AddPostsBean implements Serializable {
         newPostTitle = newPostText = "";
         newPostVisibility = "public";
         newPostPictures = null;
-        /*
-        if(this.associationSelected==null){
-        List<Integer> ids = new ArrayList<>();
-        Integer idUser = this.loginSessionBean.getLoggedUser().getIdUser();
-        ids.add(idUser);
-                this.loginSessionBean.getLoggedUser().getUserList().forEach((u) -> {
-                    ids.add(u.getIdUser());
-                });
-        this.postList = this.postFacade.findPostsByMultipleIds(ids, idUser);
-        }
-        else{
-            this.postList = this.postFacade.findPostsByGroup(this.associationSelected.getIdAssociation());
-        }
-        */
     }
-
-    /*
-    public Association getAssociationSelected() {
-        return associationSelected;
-    }
-
-    public void setAssociationSelected(Association associationSelected) {
-        this.associationSelected = associationSelected;
-    }
-    */
     
     public String getNewPostTitle() {
         return newPostTitle;
@@ -161,6 +125,8 @@ public class AddPostsBean implements Serializable {
             post.setVisibility((newPostVisibility.equalsIgnoreCase("public")) ? visibilityFacade.find(1) : visibilityFacade.find(2));
             post.setUser(loginSessionBean.getLoggedUser());
             post.setTitle(newPostTitle);
+            if(postsBean.getAssociationSelected() != null)
+                post.setAssociation(postsBean.getAssociationSelected());
             postFacade.create(post);
             if(newPostPictures != null) {
                 try {
@@ -173,19 +139,8 @@ public class AddPostsBean implements Serializable {
             newPostTitle = newPostText = "";
             newPostVisibility = "public";
             newPostPictures = null;
-            this.init();
         }
     }
-    /*
-    public void deletePost(Post post){
-        this.postFacade.remove(post);
-        init();
-    }*/
-    /*
-    public String editPost(Post post){
-        this.postSelected = post;
-        return "editPost";
-    }*/
     
     private static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -222,17 +177,4 @@ public class AddPostsBean implements Serializable {
         post.setMediaList(media);
         postFacade.edit(post);
     }
-    /*
-    public String chargeGroupFeed(Integer idGroup){
-        this.associationSelected = this.associationFacade.find(idGroup);
-        this.init();
-        return null;
-    }*/
-    /*
-    
-    public String reset(){
-        this.associationSelected = null;
-        this.init();
-        return "welcome";
-    }*/
 }
