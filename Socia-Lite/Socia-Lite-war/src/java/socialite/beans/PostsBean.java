@@ -92,7 +92,7 @@ public class PostsBean implements Serializable {
     public String chargeGroupFeed(Integer idGroup) {
         this.associationSelected = this.associationFacade.find(idGroup);
         this.init();
-        return null;
+        return "welcome";
     }
 
     public String reset() {

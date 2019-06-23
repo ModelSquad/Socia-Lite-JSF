@@ -37,6 +37,7 @@ public class CreateGroupBean {
     private User user;
     private String name;
     private String description;
+    private boolean enabled;
     
     /**
      * Creates a new instance of CreateGroupBean
@@ -58,6 +59,18 @@ public class CreateGroupBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+    
+    public void enabledUpdate(){
+        this.enabled = (name != null && description != null && name.length() > 0 && description.length() > 0);
     }
        
     public String createGroup(){
@@ -81,6 +94,7 @@ public class CreateGroupBean {
     @PostConstruct
     public void init(){
        this.user = userBean.getUser();
+       enabled = false;
     }
     
 }

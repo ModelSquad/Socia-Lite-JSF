@@ -11,8 +11,9 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:view locale="#{localeBean.currentLocale}">
     <h:head>
-        <title>SociaLite - FriendshipRequest</title>
+        <title>SociaLite - #{msgs.friendship_request}</title>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
@@ -38,7 +39,7 @@ and open the template in the editor.
         <!-- Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
     </h:head>
-    <body>
+    <h:body>
       <h:outputStylesheet library="stylesheets" name="friends.css"/>
       <h:outputScript library="js" name="welcome.js"/>
         
@@ -167,7 +168,11 @@ and open the template in the editor.
                                             <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{association.profilePic==null}"/>
                                         </div>
                                         <div class="ml-2">
-                                            <div class="h5 m-0"><a href="">#{association.name}</a></div>
+                                            <h:form>
+                                                <h:commandLink class="h5 m-0 ref" action="#{postsBean.chargeGroupFeed(association.idAssociation)}">
+                                                    #{association.name}
+                                                </h:commandLink>
+                                            </h:form>
                                         </div>
                                     </div>
                                 </div>
@@ -177,5 +182,6 @@ and open the template in the editor.
                 </div>        
             </div>
         </div>      
-    </body>
+    </h:body>
+    </f:view>
 </html>
