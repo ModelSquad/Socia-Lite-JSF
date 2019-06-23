@@ -139,6 +139,7 @@ public class AddPostsBean implements Serializable {
             newPostTitle = newPostText = "";
             newPostVisibility = "public";
             newPostPictures = null;
+            postsBean.init();
         }
     }
     

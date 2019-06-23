@@ -99,6 +99,5 @@ public class PostsBean implements Serializable {
         this.associationSelected = null;
         this.init();
         return "welcome";
-
     }
 }
