@@ -41,8 +41,6 @@ public class GroupsBean {
     private String description;
     
     @Inject
-    private UserBean userBean;
-    @Inject
     private LoginSessionBean loginSessionBean;
     /**
      * Creates a new instance of GroupsBean
@@ -68,8 +66,9 @@ public class GroupsBean {
         requests.add(request);
         this.user.setAssociationRequestList(requests);
         associationRequestFacade.create(request);
+        userFacade.edit(user);
+        associationFacade.edit(association);
         loginSessionBean.setLoggedUser(user);
-        userBean.init();
         return "";
     }
     
@@ -93,7 +92,6 @@ public class GroupsBean {
         associationRequestFacade.remove(associationRequest);
         this.user = userFacade.find(user.getIdUser());
         loginSessionBean.setLoggedUser(user);
-        userBean.init();
         return "";
     }
     
@@ -111,7 +109,6 @@ public class GroupsBean {
         associationRequestFacade.remove(associationRequest);
         this.user = userFacade.find(user.getIdUser());
         loginSessionBean.setLoggedUser(user);
-        userBean.init();
         return "";
     }
     
@@ -137,7 +134,6 @@ public class GroupsBean {
             associationFacade.remove(group);
         }
         loginSessionBean.setLoggedUser(user);
-        userBean.init();
         return "groups";
     }
     
@@ -156,7 +152,8 @@ public class GroupsBean {
         associations.add(group);
         user.setAssociationList1(associations);
         associationFacade.create(group);
-        userBean.init();
+        userFacade.edit(user);
+        loginSessionBean.setLoggedUser(user);
         return "groups";
     }
     
@@ -176,9 +173,12 @@ public class GroupsBean {
     public void setDescription(String description) {
         this.description = description;
     }
+    public boolean getValidate(){
+        return (name != null && name.length() > 0) && (description != null && description.length()>0); 
+    }
     
     @PostConstruct
     public void init(){
-        this.user = userBean.getUser();
+        this.user = loginSessionBean.getLoggedUser();
     }
 }

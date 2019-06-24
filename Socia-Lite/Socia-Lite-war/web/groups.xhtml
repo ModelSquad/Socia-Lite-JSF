@@ -132,7 +132,7 @@ and open the template in the editor.
                             </ui:fragment>
                         </h:link>
                     </div>
-                    <ui:repeat value="#{userBean.user.associationList}" var="association">
+                    <ui:repeat value="#{loginSessionBean.loggedUser.associationList}" var="association">
                         <div class="card gedf-card mt-0 mb-3">     
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -172,7 +172,6 @@ and open the template in the editor.
                         </div>                              
                     </ui:repeat>
 
-                    <!--otro modal que arreglar -->
                     <div class="card gedf-card align-items-center mt-3" style="width: 100%;">
                         <h:form>
                         <h:commandLink
@@ -183,9 +182,9 @@ and open the template in the editor.
                         </h:form>
                     </div>
                     <!-- modal create group -->
-                        <div class="modal fade" id="modalCreateGroup" >
-                            <h:form id="formModal">
-                                <div class="modal-dialog" role="document">
+                        <div class="modal fade " id="modalCreateGroup" >
+                            <h:form id="formModal" >
+                                <div class="modal-dialog" roleW="document">
                                     <div class="modal-content">
                                         <div class="modal-header text-center">
                                             <h4 class="modal-title w-100 font-weight-bold"><h:outputText value="#{msgs.create_group}"/></h4>
@@ -196,58 +195,35 @@ and open the template in the editor.
                                         <div class="modal-body mx-3">
                                             <div class="md-form mb-5">
                                                 <label> <h:outputText value="#{msgs.name}"/> </label>
-                                                <h:inputText id="name" value="#{groupsBean.name}" class="form-control" required="true"
-                                                             requiredMessage="Name is required"/>
-                                                <h:message for="name" style="color:red"/> <p></p>
+                                                <h:inputText id="name" value="#{groupsBean.name}" class="form-control" validatorMessage="#{msgs.title_error_message}">
+                                                <f:validateLength minimum="1" maximum="45"/>
+                                                </h:inputText>
+                                                <h:message for="name" style="color:red" /> <p></p>
                                                 
                                             </div>
                                             <div class="md-form mb-4">
                                                 <label><h:outputText value="#{msgs.description}"/></label>
-                                                <h:inputText id="description" value="#{groupsBean.description}" class="form-control" required="true"
-                                                             requiredMessage="Description is required"/>
+                                                <h:inputText id="description" value="#{groupsBean.description}" class="form-control"
+                                                             validatorMessage="#{msgs.description_error_message}">
+                                                    <f:validateLength minimum="1" maximum="300"/>
+                                                </h:inputText>
+                          
                                                 <h:message for="description" style="color:red"/> <p></p>
                                             </div>
-                                            <h:commandLink  action="#{groupsBean.createGroup()}" class="btn btn-indigo"><h:outputText value="#{msgs.create}"/></h:commandLink>
+                                            <h:commandButton id="submitButton" action="#{groupsBean.createGroup()}" class="btn btn-indigo" value="#{msgs.create}">
+                                            </h:commandButton>
                                         </div>
                                     </div>
                                 </div>
                             </h:form>
                         </div>       
-                    <!-- Confirmar borrado (modal) Arreglar el modal pa que funcione como yo quiero -->
-                    <!--
-                        <div id="confirm-delete" class="modal fade">
-                            <div class="modal-dialog modal-confirm">
-                                <div class="modal-content">
-                                    <div class="modal-header">				
-                                        <h4 class="modal-title">Are you sure?</h4>
-                                            <h:button class="close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </h:button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Do you really want to go out from this group? This process cannot be undone.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <h:button class="btn btn-info" value="Cancel">
-                                            <span aria-hidden="true">&times;</span>
-                                        </h:button>
-                                        <h:commandButton action="# {userBean.deleteGroup(group)}">
-                                            
-                                        </h:commandButton>
-                                        <a id="delete-btn" class="btn btn-danger btn-ok">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    -->
-                    
                 </div>
                 <!-- Menú lateral de grupos -->
                 <div class="col-sm-2 sidenav">
                     <div class="panel panel-primary friend-panel m-2">
                         <div class="panel-heading"><h:outputText value="#{msgs.groups}"/></div>
                         <div class="panel-body friend-content">
-                            <ui:repeat value="#{userBean.user.associationList}" var="association">
+                            <ui:repeat value="#{loginSessionBean.loggedUser.associationList}" var="association">
                                 <div class="card gefg-card-side">
                                     <div class="d-flex align-items-center">
                                         <div class="mr-0">

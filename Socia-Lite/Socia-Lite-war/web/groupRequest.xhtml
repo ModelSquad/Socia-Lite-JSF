@@ -121,7 +121,6 @@ and open the template in the editor.
                         </div>
                     </div>
                  </div>
-                <!-- Barra grupos -->
                 <div class="col-sm text-left feed">
                     <div class="btn-group btn-group-bar" role="group">
                         <h:link outcome="groups" class="btn btn-selection btn-default"><h:outputText value="#{msgs.my_groups}"/></h:link>
@@ -129,7 +128,7 @@ and open the template in the editor.
                         <h:link outcome="groupRequest" class="btn btn-selection btn-selected"><h:outputText value="#{msgs.groups_request}"/>
                         </h:link>
                     </div>
-                    <ui:repeat value="#{userBean.user.associationList1}" var="association">
+                    <ui:repeat value="#{loginSessionBean.loggedUser.associationList1}" var="association">
                         <ui:fragment rendered="#{association.associationRequestList.size() > 0}">
                             <p><h:form>
                                 <h:commandLink class="h5" action="#{postsBean.chargeGroupFeed(association.idAssociation)}">
