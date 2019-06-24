@@ -49,7 +49,7 @@
                     <ul class="navbar-nav">
                         <h:form>
                             <li class="nav-item active">
-                                <h:commandLink class="nav-link" action="#{postsBean.reset()}"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> Home</h:commandLink>
+                                <h:commandLink class="nav-link" action="#{postsBean.reset()}"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> #{msgs.home}</h:commandLink>
                             </li>
                         </h:form>    
                         <li class="nav-item">
@@ -59,7 +59,7 @@
                             <h:link class="nav-link" outcome="groups"><i class="fa fa-users" aria-hidden="true"></i> <h:outputText value="#{msgs.groups}"/></h:link>
                         </li>
                         <li class="nav-item">
-                            <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> Profile</h:link>
+                            <h:link class="nav-link" outcome="user"><i class="fa fa-user" aria-hidden="true"></i> #{msgs.profile}</h:link>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
@@ -82,13 +82,13 @@
                                             </c:if>                                     
                                         </datalist>
                                     </h:panelGroup>
-                                    <h:inputText value="#{profileBean.searchUser}" id="searchUser" class="form-control form-control-sm ml-3 w-200 searcher-box input-lg"  p:placeholder="Search users" p:list="autocomplete"><f:ajax event="keyup" render="showUsers" listener="#{profileBean.searchByNickname}"/></h:inputText>
+                                    <h:inputText value="#{profileBean.searchUser}" id="searchUser" class="form-control form-control-sm ml-3 w-200 searcher-box input-lg"  p:placeholder="#{msgs.search_users}" p:list="autocomplete"><f:ajax event="keyup" render="showUsers" listener="#{profileBean.searchByNickname}"/></h:inputText>
                                 </h:form>
                             </div>
                         </li>
                         <li class="nav-item">
                             <h:form>
-                                <h:commandLink class="nav-link" action="#{signOutBean.signOut()}"><i class="fa fa-sign-out"></i> Sign out</h:commandLink>
+                                <h:commandLink class="nav-link" action="#{signOutBean.signOut()}"><i class="fa fa-sign-out"></i> #{msgs.sign_out}</h:commandLink>
                             </h:form>
                         </li>
                     </ul>

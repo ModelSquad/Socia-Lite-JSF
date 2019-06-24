@@ -28,6 +28,10 @@ public class SignOutBean {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("LoginSessionBean", null);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("UserBean", null);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("PostsBean", null);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ProfileBean", null);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("RegisterBean", null);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("LocaleBean", null);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("LanguageBean", null);
         return "index";
     }
     

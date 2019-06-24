@@ -4,157 +4,159 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <title>Register</title>
-    </h:head>
-    <h:body>
-        <h:outputStylesheet library="stylesheets" name="register.css"/>
-        <div class="wrapper fadeInDown">
-            <div id="formContent">
-                <!-- Icon -->
-                <div class="fadeIn first">
-                    <h:graphicImage style="margin:10px" value="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/S-Bahn_Austria.svg/128px-S-Bahn_Austria.svg.png" height="100" width="100" alt="User Icon" />
+    <f:view locale="#{localeBean.currentLocale}">    
+        <h:head>
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <title>Register</title>
+        </h:head>
+        <h:body>
+            <h:outputStylesheet library="stylesheets" name="register.css"/>
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <!-- Icon -->
+                    <div class="fadeIn first">
+                        <h:graphicImage style="margin:10px" value="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/S-Bahn_Austria.svg/128px-S-Bahn_Austria.svg.png" height="100" width="100" alt="User Icon" />
+                    </div>
+
+                    <!-- Register Form -->
+                    <h:form>
+                        <table class="center">
+                            <tr>
+                                <td><label for="email">Email</label></td>
+                                <td>
+                                    <h:inputText id="email" value="#{registerBean.user.email}" class="fadeIn second" pt:type="email" pt:placeholder="email" required="true" requiredMessage="#{msgs.required_email}">
+                                        <f:ajax listener="#{registerBean.emailIsAvailable}" execute="email" render="emailExists"/>
+                                    </h:inputText>
+                                </td>
+                            </tr>
+                            <tr/>
+                            <tr>
+                                <td/>
+                                <td><h:message for="email" class="loginMessage alert alert-danger" role="alert" id="emailMessage"/></td>
+                            </tr>
+                            <h:panelGroup id="emailExists"> 
+                                <h:panelGroup rendered="#{registerBean.isEmailTaken()}">
+                                    <tr>
+                                        <td/>
+                                        <td>
+                                            <div class="loginMessage alert alert-danger" role="alert">
+                                                <a id="message">#{msgs.error_email}</a>
+                                            </div>  
+                                        </td>
+                                    </tr> 
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+
+
+                            <tr>
+                                <td><label for="password">#{msgs.password}</label></td>
+                                <td>
+                                    <h:inputSecret id="password" class="fadeIn third" pt:placeholder="#{msgs.password}" value="#{registerBean.user.password}" required="true" requiredMessage="#{msgs.required_password}"/>
+                                </td>
+                            </tr>
+                            <tr/>
+                            <tr>
+                                <td/>
+                                <td><h:message for="password" class="loginMessage alert alert-danger" role="alert" id="message"/></td>
+                            </tr>
+                            <tr/>
+                            <tr>
+                                <td><label for="repeatPassword">#{msgs.repeat_password}</label></td>
+                                <td>
+                                    <h:inputSecret id="repeatPassword" class="fadeIn third" pt:placeholder="#{msgs.repeat_password}" value="#{registerBean.repeatPassword}">
+                                        <f:ajax listener="#{registerBean.passwordsMatch}" execute = "password repeatPassword" render="passwordsDontMatch"/>
+                                    </h:inputSecret>
+                                </td>
+                            </tr>
+                            <h:panelGroup id="passwordsDontMatch">
+                                <h:panelGroup rendered="#{registerBean.isPasswordsDontMatch()}">
+                                    <tr>
+                                        <td/>
+                                        <td>
+                                            <div class="loginMessage alert alert-danger" role="alert">
+                                                <a id="message">#{msgs.error_passwords}</a>
+                                            </div>  
+                                        </td>
+                                    </tr>                            
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+
+
+                            <tr>
+                                <td>
+                                    <label for="name">#{msgs.name}</label>
+                                </td>
+                                <td>
+                                    <h:inputText id="name" value="#{registerBean.user.name}" class="fadeIn second" pt:placeholder="#{msgs.name}" required="true" requiredMessage="#{msgs.required_name}"/>           
+                                </td>
+                            </tr>
+                            <tr/>
+                            <tr>
+                                <td/>
+                                <td><h:message for="name" class="loginMessage alert alert-danger" role="alert"/></td>
+                            </tr>
+                            <tr/>
+
+
+                            <tr>
+                                <td>
+                                    <label for="surname">#{msgs.surname}</label>
+                                </td>
+                                <td>
+                                    <h:inputText id="surname" value="#{registerBean.user.surname}" class="fadeIn second" pt:placeholder="#{msgs.surname}" required="true" requiredMessage="#{msgs.required_surname}"/>
+                                </td>
+                            </tr>
+                            <tr/>
+                            <tr>
+                                <td/>
+                                <td><h:message for="surname" class="loginMessage alert alert-danger" role="alert"/></td>
+                            </tr>
+                            <tr/>
+
+
+                            <tr>
+                                <td>
+                                    <label for="nickname">#{msgs.nickname}</label>
+                                </td>
+                                <td>
+                                    <h:inputText id="nickname" value="#{registerBean.user.nickname}" class="fadeIn second" pt:placeholder="#{msgs.nickname}" required="true" requiredMessage="#{msgs.required_nickname}"/>
+                                </td>
+                            </tr>
+                            <tr/>
+                            <tr>
+                                <td/>
+                                <td><h:message for="nickname" class="loginMessage alert alert-danger" role="alert"/></td>
+                            </tr>
+                            <tr/>
+
+
+                            <tr>
+                                <td>
+                                    <label for="birthdate">#{msgs.birthdate}</label>
+                                </td>
+                                <td>
+                                    <h:inputText pt:type="date" id="birthdate" value="#{registerBean.user.birthDate}" class="fadeIn second" pt:placeholder="#{msgs.birthdate}" required="true" requiredMessage="#{msgs.required_birthdate}">
+                                        <f:convertDateTime pattern ="yyyy-mm-dd"/>
+                                    </h:inputText>
+                                </td>
+                            </tr>
+                            <tr/>
+                            <tr>
+                                <td/>
+                                <td><h:message for="birthdate" class="loginMessage alert alert-danger" role="alert"/></td>
+                            </tr>
+                            <tr/>
+
+                        </table>
+                        <h:commandButton class="fadeIn fourth" value="#{msgs.register}" action="#{registerBean.doRegister()}"/>
+                    </h:form>
                 </div>
-
-                <!-- Register Form -->
-                <h:form>
-                    <table class="center">
-                        <tr>
-                            <td><label for="email">Email</label></td>
-                            <td>
-                                <h:inputText id="email" value="#{registerBean.user.email}" class="fadeIn second" pt:type="email" pt:placeholder="email" required="true" requiredMessage="Enter your email">
-                                    <f:ajax listener="#{registerBean.emailIsAvailable}" execute="email" render="emailExists"/>
-                                </h:inputText>
-                            </td>
-                        </tr>
-                        <tr/>
-                        <tr>
-                            <td/>
-                            <td><h:message for="email" class="loginMessage alert alert-danger" role="alert" id="emailMessage"/></td>
-                        </tr>
-                        <h:panelGroup id="emailExists"> 
-                            <h:panelGroup rendered="#{registerBean.isEmailTaken()}">
-                                <tr>
-                                    <td/>
-                                    <td>
-                                        <div class="loginMessage alert alert-danger" role="alert">
-                                            <a id="message">This email already exists, please enter another email or sign in.</a>
-                                        </div>  
-                                    </td>
-                                </tr> 
-                            </h:panelGroup>
-                        </h:panelGroup>
-                   
-                        
-                                                
-                        <tr>
-                            <td><label for="password">Password</label></td>
-                            <td>
-                                <h:inputSecret id="password" class="fadeIn third" pt:placeholder=" password" value="#{registerBean.user.password}" required="true" requiredMessage="Please enter a password"/>
-                            </td>
-                        </tr>
-                        <tr/>
-                        <tr>
-                            <td/>
-                            <td><h:message for="password" class="loginMessage alert alert-danger" role="alert" id="message"/></td>
-                        </tr>
-                        <tr/>
-                        <tr>
-                            <td><label for="repeatPassword">Repeat password</label></td>
-                            <td>
-                                <h:inputSecret id="repeatPassword" class="fadeIn third" pt:placeholder="repeat password" value="#{registerBean.repeatPassword}">
-                                    <f:ajax listener="#{registerBean.passwordsMatch}" execute = "password repeatPassword" render="passwordsDontMatch"/>
-                                </h:inputSecret>
-                            </td>
-                        </tr>
-                        <h:panelGroup id="passwordsDontMatch">
-                            <h:panelGroup rendered="#{registerBean.isPasswordsDontMatch()}">
-                                <tr>
-                                    <td/>
-                                    <td>
-                                        <div class="loginMessage alert alert-danger" role="alert">
-                                            <a id="message">Your passwords do not match</a>
-                                        </div>  
-                                    </td>
-                                </tr>                            
-                            </h:panelGroup>
-                        </h:panelGroup>
-                        
-                        
-                        
-                        <tr>
-                            <td>
-                                <label for="name">Name</label>
-                            </td>
-                            <td>
-                                <h:inputText id="name" value="#{registerBean.user.name}" class="fadeIn second" pt:placeholder="name" required="true" requiredMessage="Enter your name"/>           
-                            </td>
-                        </tr>
-                        <tr/>
-                        <tr>
-                            <td/>
-                            <td><h:message for="name" class="loginMessage alert alert-danger" role="alert"/></td>
-                        </tr>
-                        <tr/>
-                        
-                        
-                        <tr>
-                            <td>
-                                <label for="surname">Surname</label>
-                            </td>
-                            <td>
-                                <h:inputText id="surname" value="#{registerBean.user.surname}" class="fadeIn second" pt:placeholder="surname" required="true" requiredMessage="Enter your surname"/>
-                            </td>
-                        </tr>
-                        <tr/>
-                        <tr>
-                            <td/>
-                            <td><h:message for="surname" class="loginMessage alert alert-danger" role="alert"/></td>
-                        </tr>
-                        <tr/>
-                        
-                        
-                        <tr>
-                            <td>
-                                <label for="nickname">Nickname</label>
-                            </td>
-                            <td>
-                                <h:inputText id="nickname" value="#{registerBean.user.nickname}" class="fadeIn second" pt:placeholder="nickname" required="true" requiredMessage="Enter your nickname"/>
-                            </td>
-                        </tr>
-                        <tr/>
-                        <tr>
-                            <td/>
-                            <td><h:message for="nickname" class="loginMessage alert alert-danger" role="alert"/></td>
-                        </tr>
-                        <tr/>
-
-                        
-                        <tr>
-                            <td>
-                                <label for="birthdate">Birthdate</label>
-                            </td>
-                            <td>
-                                <h:inputText pt:type="date" id="birthdate" value="#{registerBean.user.birthDate}" class="fadeIn second" pt:placeholder="birthdate" required="true" requiredMessage="Enter your birthdate">
-                                    <f:convertDateTime pattern ="yyyy-mm-dd"/>
-                                </h:inputText>
-                            </td>
-                        </tr>
-                        <tr/>
-                        <tr>
-                            <td/>
-                            <td><h:message for="birthdate" class="loginMessage alert alert-danger" role="alert"/></td>
-                        </tr>
-                        <tr/>
-                        
-                    </table>
-                    <h:commandButton class="fadeIn fourth" value="Register" action="#{registerBean.doRegister()}"/>
-                </h:form>
             </div>
-        </div>
-    </h:body>
+        </h:body>
+    </f:view>
 </html>
 

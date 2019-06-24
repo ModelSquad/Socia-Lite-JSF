@@ -93,6 +93,10 @@ public class ProfileBean implements Serializable{
         }
         
     }
+    public String goProfile(Integer userId){
+        this.user=userFacade.findByIdUser(userId);
+        return "profile";
+    }
     
     
 }
