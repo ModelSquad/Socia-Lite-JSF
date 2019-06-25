@@ -20,9 +20,9 @@ $(document).ready(function () {
         
         for(var i = 0; i < maximum; i++) {
             document.getElementById('img-' + i).src = window.URL.createObjectURL(this.files[i]);
-            $('.jumbotron-post').css('height', '400px');
+            $('.jumbotron-post').css('height', '450px');
             $('.jumbotron-post').hover(function() {
-                $(this).css('height', '400px');
+                $(this).css('height', '450px');
             }, function() {
                 $(this).css('height', '130px');
             });
@@ -31,7 +31,7 @@ $(document).ready(function () {
         if(i === 0) {
             $('.jumbotron-post').css('height', '130px');
             $('.jumbotron-post').hover(function() {
-                $(this).css('height', '290px');
+                $(this).css('height', '360px');
             }, function() {
                 $(this).css('height', '130px');
             });

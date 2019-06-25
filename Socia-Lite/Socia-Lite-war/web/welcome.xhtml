@@ -125,11 +125,19 @@
                         <h:form p:enctype='multipart/form-data'>
                             <h:commandButton rendered="false" action="#{postsBean.chargeGroupFeed(1)}" value="group"/><br/> 
                             <div class="jumbotron jumbotron-post">
-                                <h4>#{msgs.newPost_boxTitle}</h4>
-                                <h:inputText value="#{addPostsBean.newPostTitle}" id="title" class="form-control post-title" p:placeholder="#{msgs.newPost_titlePlaceholder}">
+                                <h4>#{msgs.newPost_boxTitle}</h4>                                
+                                <h:inputText value="#{addPostsBean.newPostTitle}" id="title" class="form-control post-title" p:placeholder="#{msgs.newPost_titlePlaceholder}" validatorMessage="#{msgs.required_title}">
+                                    <f:validateLength minimum="1" maximum="45"></f:validateLength>
                                 </h:inputText>
-                                <h:inputTextarea value="#{addPostsBean.newPostText}" id="post-text" class="form-control text-area-post post-actions" p:placeholder="#{msgs.newPost_bodyPlaceholder}">
+                                <div class="post-actions" style="height:3px"></div>
+                                <h:message for="title" class="post-actions alert alert-danger">
+                                </h:message>
+                                <h:inputTextarea value="#{addPostsBean.newPostText}" id="post-text" class="form-control text-area-post post-actions" p:placeholder="#{msgs.newPost_bodyPlaceholder}" validatorMessage="#{msgs.required_postBody}">
+                                    <f:validateLength minimum="1" maximum="500"></f:validateLength>
                                 </h:inputTextarea>
+                                <div class="post-actions" style="height:3px"></div>
+                                <h:message for="post-text" class="post-actions alert alert-danger">
+                                </h:message>
                                 <div class="btn-group post-actions post-visibility" role="group">
                                     <div class="input-group">
                                         <div id="radioBtn" class="btn-group">
