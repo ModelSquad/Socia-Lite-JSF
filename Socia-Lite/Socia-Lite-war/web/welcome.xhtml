@@ -108,8 +108,10 @@
                                                 <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{friend.profilePic==null}"/>
                                             </div>
                                             <div class="ml-2">
-                                                <div class="h5 m-0"><a href=">">#{friend.nickname}</a></div>
+                                                <h:form>
+                                                <div class="h5 m-0"><h:commandLink action="#{profileBean.goProfile(friend.idUser)}">#{friend.nickname}</h:commandLink></div>
                                                 <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
+                                                </h:form>
                                             </div>
                                         </div>
                                     </div>
