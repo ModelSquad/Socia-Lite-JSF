@@ -36,6 +36,12 @@ body {
     object-fit: cover;
 }
 
+.post-actions {
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 20px;
+}
+
 #cardElem{
   position: fixed;
   top: 50%;
