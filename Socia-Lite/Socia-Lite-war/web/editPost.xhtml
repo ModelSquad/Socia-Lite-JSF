@@ -62,19 +62,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <h:panelGroup class="card-body">
                             <h:panelGroup class="text-muted h7 mb-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> #{editPostBean.postSelected.date} </h:panelGroup><br/>
                             <h:panelGroup class="md-form">
                                 <h:link ><i class="fas fa-pencil-alt prefix"> #{msgs.post_edit_title}</i></h:link>
-                                <h:inputTextarea class="md-textarea form-control card-title " value="#{editPostBean.postSelected.title}" rows="3"></h:inputTextarea>
+                                <h:inputText id="title" class="md-textarea form-control card-title " value="#{editPostBean.postSelected.title}" validatorMessage="#{msgs.required_title}">
+                                    <f:validateLength minimum="1" maximum="45"></f:validateLength>
+                                </h:inputText>                                
+                                <h:message for="title" class="alert alert-danger">
+                                </h:message><br/>
                             </h:panelGroup>
                             <h:panelGroup class="md-form">
-                                <a href="#"><i class="fas fa-pencil-alt prefix"> #{msgs.post_edit_text}</i></a>
-                                <h:inputTextarea class="md-textarea form-control card-title " value="#{editPostBean.postSelected.text}" rows="3"></h:inputTextarea>
+                                <div style="margin-top: 20px;"><a href="#"><i class="fas fa-pencil-alt prefix"> #{msgs.post_edit_text}</i></a></div>
+                                <h:inputTextarea id="post-text" class="md-textarea form-control card-title " value="#{editPostBean.postSelected.text}" rows="3" validatorMessage="#{msgs.required_postBody}">
+                                    <f:validateLength minimum="1" maximum="500"></f:validateLength>
+                                </h:inputTextarea>
+                                <h:message for="post-text" class="alert alert-danger">
+                                </h:message>
                             </h:panelGroup>
                             <br/>
                             <div class="md-form">
-                                <a href="#"><i class="fas fa-pencil-alt prefix"> #{msgs.post_edit_visibility}</i></a>
+                                <div style="margin-top: 20px;"><a href="#"><i class="fas fa-pencil-alt prefix"> #{msgs.post_edit_visibility}</i></a></div>
                                 <div class="input-group">
                                     <div id="radioBtn" class="btn-group">
                                         <c:choose>                                        
@@ -91,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </h:panelGroup>
                         <h:panelGroup class="card-footer">
                             <h:commandButton class="btn btn-primary save-btn" action="#{editPostBean.submitPost()}" value="#{msgs.post_edit_save}"/>
                         </h:panelGroup>
