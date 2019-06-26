@@ -27,6 +27,7 @@
                                 <td><label for="email">Email</label></td>
                                 <td>
                                     <h:inputText id="email" value="#{registerBean.user.email}" class="fadeIn second" pt:type="email" pt:placeholder="email" required="true" requiredMessage="#{msgs.required_email}">
+                                        <f:validateLength maximum="45"/>
                                         <f:ajax listener="#{registerBean.emailIsAvailable}" execute="email" render="emailExists"/>
                                     </h:inputText>
                                 </td>
@@ -54,7 +55,9 @@
                             <tr>
                                 <td><label for="password">#{msgs.password}</label></td>
                                 <td>
-                                    <h:inputSecret id="password" class="fadeIn third" pt:placeholder="#{msgs.password}" value="#{registerBean.user.password}" required="true" requiredMessage="#{msgs.required_password}"/>
+                                    <h:inputSecret id="password" class="fadeIn third" pt:placeholder="#{msgs.password}" value="#{registerBean.user.password}" required="true" requiredMessage="#{msgs.required_password}">
+                                        <f:validateLength maximum="100"/>
+                                    </h:inputSecret>
                                 </td>
                             </tr>
                             <tr/>
@@ -68,6 +71,7 @@
                                 <td>
                                     <h:inputSecret id="repeatPassword" class="fadeIn third" pt:placeholder="#{msgs.repeat_password}" value="#{registerBean.repeatPassword}">
                                         <f:ajax listener="#{registerBean.passwordsMatch}" execute = "password repeatPassword" render="passwordsDontMatch"/>
+                                        <f:validateLength maximum="100"/>
                                     </h:inputSecret>
                                 </td>
                             </tr>
@@ -91,7 +95,9 @@
                                     <label for="name">#{msgs.name}</label>
                                 </td>
                                 <td>
-                                    <h:inputText id="name" value="#{registerBean.user.name}" class="fadeIn second" pt:placeholder="#{msgs.name}" required="true" requiredMessage="#{msgs.required_name}"/>           
+                                    <h:inputText id="name" value="#{registerBean.user.name}" class="fadeIn second" pt:placeholder="#{msgs.name}" required="true" requiredMessage="#{msgs.required_name}">
+                                        <f:validateLength maximum="45"/>
+                                    </h:inputText>
                                 </td>
                             </tr>
                             <tr/>
@@ -107,7 +113,9 @@
                                     <label for="surname">#{msgs.surname}</label>
                                 </td>
                                 <td>
-                                    <h:inputText id="surname" value="#{registerBean.user.surname}" class="fadeIn second" pt:placeholder="#{msgs.surname}" required="true" requiredMessage="#{msgs.required_surname}"/>
+                                    <h:inputText id="surname" value="#{registerBean.user.surname}" class="fadeIn second" pt:placeholder="#{msgs.surname}" required="true" requiredMessage="#{msgs.required_surname}">
+                                        <f:validateLength maximum="45"/>
+                                    </h:inputText>
                                 </td>
                             </tr>
                             <tr/>
@@ -123,7 +131,9 @@
                                     <label for="nickname">#{msgs.nickname}</label>
                                 </td>
                                 <td>
-                                    <h:inputText id="nickname" value="#{registerBean.user.nickname}" class="fadeIn second" pt:placeholder="#{msgs.nickname}" required="true" requiredMessage="#{msgs.required_nickname}"/>
+                                    <h:inputText id="nickname" value="#{registerBean.user.nickname}" class="fadeIn second" pt:placeholder="#{msgs.nickname}" required="true" requiredMessage="#{msgs.required_nickname}">
+                                        <f:validateLength maximum="45"/>
+                                    </h:inputText>
                                 </td>
                             </tr>
                             <tr/>

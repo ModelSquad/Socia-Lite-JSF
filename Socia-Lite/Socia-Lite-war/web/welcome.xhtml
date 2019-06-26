@@ -41,7 +41,9 @@
             <h:outputStylesheet library="stylesheets" name="friends.css"/>
             <h:outputScript library="js" name="welcome.js"/>
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <h:link class="navbar-brand" outcome="welcome">SociaLite</h:link>
+                <h:form>
+                    <h:commandLink class="navbar-brand" action="#{postsBean.reset()}">SociaLite</h:commandLink>
+                </h:form>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -109,8 +111,8 @@
                                             </div>
                                             <div class="ml-2">
                                                 <h:form>
-                                                <div class="h5 m-0"><h:commandLink action="#{profileBean.goProfile(friend.idUser)}">#{friend.nickname}</h:commandLink></div>
-                                                <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
+                                                    <div class="h5 m-0"><h:commandLink action="#{profileBean.goProfile(friend.idUser)}">#{friend.nickname}</h:commandLink></div>
+                                                    <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
                                                 </h:form>
                                             </div>
                                         </div>
@@ -125,11 +127,19 @@
                         <h:form p:enctype='multipart/form-data'>
                             <h:commandButton rendered="false" action="#{postsBean.chargeGroupFeed(1)}" value="group"/><br/> 
                             <div class="jumbotron jumbotron-post">
-                                <h4>#{msgs.newPost_boxTitle}</h4>
-                                <h:inputText value="#{addPostsBean.newPostTitle}" id="title" class="form-control post-title" p:placeholder="#{msgs.newPost_titlePlaceholder}">
+                                <h4>#{msgs.newPost_boxTitle}</h4>                                
+                                <h:inputText value="#{addPostsBean.newPostTitle}" id="title" class="form-control post-title" p:placeholder="#{msgs.newPost_titlePlaceholder}" validatorMessage="#{msgs.required_title}">
+                                    <f:validateLength minimum="1" maximum="45"></f:validateLength>
                                 </h:inputText>
-                                <h:inputTextarea value="#{addPostsBean.newPostText}" id="post-text" class="form-control text-area-post post-actions" p:placeholder="#{msgs.newPost_bodyPlaceholder}">
+                                <div class="post-actions" style="height:3px"></div>
+                                <h:message for="title" class="post-actions alert alert-danger">
+                                </h:message>
+                                <h:inputTextarea value="#{addPostsBean.newPostText}" id="post-text" class="form-control text-area-post post-actions" p:placeholder="#{msgs.newPost_bodyPlaceholder}" validatorMessage="#{msgs.required_postBody}">
+                                    <f:validateLength minimum="1" maximum="500"></f:validateLength>
                                 </h:inputTextarea>
+                                <div class="post-actions" style="height:3px"></div>
+                                <h:message for="post-text" class="post-actions alert alert-danger">
+                                </h:message>
                                 <div class="btn-group post-actions post-visibility" role="group">
                                     <div class="input-group">
                                         <div id="radioBtn" class="btn-group">
@@ -204,7 +214,7 @@
                                                 <h:outputText style="font-size: 20px;" class="card-title" value="#{post.title}"></h:outputText>
                                             </h:link><br/>
 
-                                            <div id="carouselIndicator" class="carousel slide carousel-body" data-ride="carousel" data-interval="2000">
+                                            <div id="carouselIndicator" class="carousel slide carousel-body" data-ride="carousel" data-interval="3000">
                                                 <ol class="carousel-indicators">
                                                     <c:forEach var="i" begin="0" end="#{post.mediaList.size()-1}">  
                                                         <c:if test="#{i==0}">
@@ -255,11 +265,11 @@
                                                 <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{association.profilePic==null}"/>
                                             </div>
                                             <div class="ml-2">
-                                            <h:form>
-                                                <h:commandLink class="h5 m-0 ref" action="#{postsBean.chargeGroupFeed(association.idAssociation)}">
-                                                    #{association.name}
-                                                </h:commandLink>
-                                            </h:form>
+                                                <h:form>
+                                                    <h:commandLink class="h5 m-0 ref" action="#{postsBean.chargeGroupFeed(association.idAssociation)}">
+                                                        #{association.name}
+                                                    </h:commandLink>
+                                                </h:form>
                                             </div>
                                         </div>
                                     </div>
@@ -269,24 +279,6 @@
                     </div>
                 </div>
             </div>
-            <!-- fran
-                <script>
-                    window.onscroll = function () {
-                        myFunction()
-                    };
-            
-                    var header = document.getElementById("myHeader");
-                    var sticky = header.offsetTop;
-            
-                    function myFunction() {
-                        if (window.pageYOffset > sticky) {
-                            header.classList.add("sticky");
-                        } else {
-                            header.classList.remove("sticky");
-                        }
-                    }
-                </script>
-            -->
         </h:body>
     </f:view>
 </html>

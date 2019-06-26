@@ -31,16 +31,18 @@
             <h:outputScript library="js" name="user.js"/>
 
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <h:link class="navbar-brand" outcome="welcome">SociaLite</h:link>
+                <h:form>
+                    <h:commandLink class="navbar-brand" action="#{postsBean.reset()}">SociaLite</h:commandLink>
+                </h:form>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <h:form>
-                        <li class="nav-item active">
-                            <h:commandLink class="nav-link" action="#{postsBean.reset()}"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> #{msgs.home}</h:commandLink>
-                        </li>
+                            <li class="nav-item active">
+                                <h:commandLink class="nav-link" action="#{postsBean.reset()}"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> #{msgs.home}</h:commandLink>
+                            </li>
                         </h:form>   
                         <li class="nav-item">
                             <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> <h:outputText value="#{msgs.friends}"/></h:link>
@@ -141,7 +143,9 @@
                                 <h:panelGroup class="card-body" pt:id="editName" style="display: none;">                                
                                         <h4>#{msgs.edit_your_name}</h4>
                                         <h:form>
-                                            <h:inputText value="#{userBean.user.name}"  id="name"/>
+                                            <h:inputText value="#{userBean.user.name}"  id="name">
+                                                <f:validateLength minimum="1" maximum="45"/>
+                                            </h:inputText>
                                             <h:commandButton value="#{msgs.post_edit}" pt:id="ename" action="#{userBean.saveChanges}" class="btn btn-outline-secondary btn-sm"><f:ajax execute="name" render="showName profileName"/></h:commandButton>                                           
                                         </h:form>
                                 </h:panelGroup>
@@ -160,7 +164,9 @@
                                 <h:panelGroup class="card-body" pt:id="editSurname" style="display:none">
                                     <h:form>
                                         <h4>#{msgs.edit_your_surname}</h4>
-                                        <h:inputText value="#{userBean.user.surname}"  id="surname"/>
+                                        <h:inputText value="#{userBean.user.surname}"  id="surname">
+                                            <f:validateLength minimum="1" maximum="45"/>
+                                        </h:inputText>
                                         <h:commandButton value="#{msgs.post_edit}" pt:id="esurname" action="#{userBean.saveChanges}" class="btn btn-outline-secondary btn-sm"><f:ajax execute="surname" render="showSurname profileName"/></h:commandButton>
                                     </h:form>
                                 </h:panelGroup>
@@ -216,14 +222,18 @@
                             <h:panelGroup class="card-body" pt:id="addBirthplace" style="display: none;">  
                                 <h4>#{msgs.add_your_birthplace}</h4>
                                 <h:form>
-                                    <h:inputText value="#{userBean.user.birthPlace}"  id="iabirthplace"/>
+                                    <h:inputText value="#{userBean.user.birthPlace}"  id="iabirthplace">
+                                        <f:validateLength maximum="45"/>
+                                    </h:inputText>
                                     <h:commandButton value="#{msgs.add}" pt:id="abirthplace" action="#{userBean.saveChanges}" class="btn btn-outline-primary btn-sm"><f:ajax execute="iabirthplace" render="showBirthplace"/></h:commandButton>   
                                 </h:form>
                             </h:panelGroup>
                             <h:panelGroup class="card-body" pt:id="editBirthplace" style="display: none;">
                                 <h4>#{msgs.edit_your_birthplace}</h4>
                                 <h:form>                                
-                                    <h:inputText value="#{userBean.user.birthPlace}"  id="iebirthplace"/>
+                                    <h:inputText value="#{userBean.user.birthPlace}"  id="iebirthplace">
+                                        <f:validateLength maximum="45"/>
+                                    </h:inputText>
                                     <h:commandButton value="#{msgs.post_edit}" pt:id="ebirthplace" action="#{userBean.saveChanges}" class="btn btn-outline-secondary btn-sm"><f:ajax execute="iebirthplace" render="showBirthplace"/></h:commandButton> 
                                 </h:form>
                             </h:panelGroup>
@@ -255,14 +265,18 @@
                             <h:panelGroup class="card-body" pt:id="addJob" style="display: none;">  
                                 <h4>#{msgs.add_your_job}</h4>
                                 <h:form>
-                                    <h:inputText value="#{userBean.user.job}"  id="iajob"/>
+                                    <h:inputText value="#{userBean.user.job}"  id="iajob">
+                                        <f:validateLength maximum="100"/>
+                                    </h:inputText>                                        
                                     <h:commandButton value="#{msgs.add}" pt:id="ajob" action="#{userBean.saveChanges}" class="btn btn-outline-primary btn-sm"><f:ajax execute="iajob" render="showJob"/></h:commandButton>   
                                 </h:form>
                             </h:panelGroup>
                             <h:panelGroup class="card-body" pt:id="editJob" style="display: none;">
                                 <h4>#{msgs.edit_your_job}</h4>
                                 <h:form>                                
-                                    <h:inputText value="#{userBean.user.job}"  id="iejob"/>
+                                    <h:inputText value="#{userBean.user.job}"  id="iejob">
+                                        <f:validateLength maximum="100"/>
+                                    </h:inputText>
                                     <h:commandButton value="#{msgs.post_edit}" pt:id="ejob" action="#{userBean.saveChanges}" class="btn btn-outline-secondary btn-sm"><f:ajax execute="iejob" render="showJob"/></h:commandButton> 
                                 </h:form>
                             </h:panelGroup>
@@ -294,14 +308,18 @@
                             <h:panelGroup class="card-body" pt:id="addStudyPlace" style="display: none;">  
                                 <h4>#{msgs.add_your_study_place}</h4>
                                 <h:form>
-                                    <h:inputText value="#{userBean.user.studyPlace}"  id="iastudyPlace"/>
+                                    <h:inputText value="#{userBean.user.studyPlace}"  id="iastudyPlace">
+                                        <f:validateLength maximum="45"/>
+                                    </h:inputText>
                                     <h:commandButton value="#{msgs.add}" pt:id="astudyPlace" action="#{userBean.saveChanges}" class="btn btn-outline-primary btn-sm"><f:ajax execute="iastudyPlace" render="showStudyPlace"/></h:commandButton>   
                                 </h:form>
                             </h:panelGroup>
                             <h:panelGroup class="card-body" pt:id="editStudyPlace" style="display: none;">
                                 <h4>#{msgs.edit_your_study_place}</h4>
                                 <h:form>                                
-                                    <h:inputText value="#{userBean.user.studyPlace}"  id="iestudyPlace"/>
+                                    <h:inputText value="#{userBean.user.studyPlace}"  id="iestudyPlace">
+                                        <f:validateLength maximum="45"/>
+                                    </h:inputText>                                        
                                     <h:commandButton value="#{msgs.post_edit}" pt:id="estudyPlace" action="#{userBean.saveChanges}" class="btn btn-outline-secondary btn-sm"><f:ajax execute="iestudyPlace" render="showStudyPlace"/></h:commandButton> 
                                 </h:form>
                             </h:panelGroup>
@@ -335,14 +353,18 @@
                             <h:panelGroup class="card-body" pt:id="addWebsite" style="display: none;">  
                                 <h4>#{msgs.add_your_website}</h4>
                                 <h:form>
-                                    <h:inputText value="#{userBean.user.website}"  id="iawebsite"/>
+                                    <h:inputText value="#{userBean.user.website}"  id="iawebsite">
+                                        <f:validateLength maximum="200"/>
+                                    </h:inputText>
                                     <h:commandButton value="#{msgs.add}" pt:id="awebsite" action="#{userBean.saveChanges}" class="btn btn-outline-primary btn-sm"><f:ajax execute="iawebsite" render="showWebsite"/></h:commandButton>   
                                 </h:form>
                             </h:panelGroup>
                             <h:panelGroup class="card-body" pt:id="editWebsite" style="display: none;">
                                 <h4>#{msgs.edit_your_website}</h4>
                                 <h:form>                                
-                                    <h:inputText value="#{userBean.user.website}"  id="iewebsite"/>
+                                    <h:inputText value="#{userBean.user.website}"  id="iewebsite">
+                                        <f:validateLength maximum="200"/>
+                                    </h:inputText>                                        
                                     <h:commandButton value="#{msgs.post_edit}" pt:id="ewebsite" action="#{userBean.saveChanges}" class="btn btn-outline-secondary btn-sm"><f:ajax execute="iewebsite" render="showWebsite"/></h:commandButton> 
                                 </h:form>
                             </h:panelGroup>
