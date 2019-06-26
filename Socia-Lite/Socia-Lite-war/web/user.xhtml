@@ -31,16 +31,18 @@
             <h:outputScript library="js" name="user.js"/>
 
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <h:link class="navbar-brand" outcome="welcome">SociaLite</h:link>
+                <h:form>
+                    <h:commandLink class="navbar-brand" action="#{postsBean.reset()}">SociaLite</h:commandLink>
+                </h:form>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <h:form>
-                        <li class="nav-item active">
-                            <h:commandLink class="nav-link" action="#{postsBean.reset()}"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> #{msgs.home}</h:commandLink>
-                        </li>
+                            <li class="nav-item active">
+                                <h:commandLink class="nav-link" action="#{postsBean.reset()}"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i> #{msgs.home}</h:commandLink>
+                            </li>
                         </h:form>   
                         <li class="nav-item">
                             <h:link class="nav-link" outcome="friends"><i class="material-icons" style="font-size:22px;">people</i> <h:outputText value="#{msgs.friends}"/></h:link>

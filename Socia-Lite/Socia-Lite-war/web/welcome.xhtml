@@ -41,7 +41,9 @@
             <h:outputStylesheet library="stylesheets" name="friends.css"/>
             <h:outputScript library="js" name="welcome.js"/>
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <h:link class="navbar-brand" outcome="welcome">SociaLite</h:link>
+                <h:form>
+                    <h:commandLink class="navbar-brand" action="#{postsBean.reset()}">SociaLite</h:commandLink>
+                </h:form>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -109,8 +111,8 @@
                                             </div>
                                             <div class="ml-2">
                                                 <h:form>
-                                                <div class="h5 m-0"><h:commandLink action="#{profileBean.goProfile(friend.idUser)}">#{friend.nickname}</h:commandLink></div>
-                                                <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
+                                                    <div class="h5 m-0"><h:commandLink action="#{profileBean.goProfile(friend.idUser)}">#{friend.nickname}</h:commandLink></div>
+                                                    <div class="h7 text-muted">#{friend.name} #{friend.surname}</div>
                                                 </h:form>
                                             </div>
                                         </div>
@@ -263,11 +265,11 @@
                                                 <h:graphicImage value="http://www.softball.org.au/wp-content/uploads/2017/05/no-profile-image.png" class="rounded-circle side-profile-pic" rendered="#{association.profilePic==null}"/>
                                             </div>
                                             <div class="ml-2">
-                                            <h:form>
-                                                <h:commandLink class="h5 m-0 ref" action="#{postsBean.chargeGroupFeed(association.idAssociation)}">
-                                                    #{association.name}
-                                                </h:commandLink>
-                                            </h:form>
+                                                <h:form>
+                                                    <h:commandLink class="h5 m-0 ref" action="#{postsBean.chargeGroupFeed(association.idAssociation)}">
+                                                        #{association.name}
+                                                    </h:commandLink>
+                                                </h:form>
                                             </div>
                                         </div>
                                     </div>
@@ -277,24 +279,6 @@
                     </div>
                 </div>
             </div>
-            <!-- fran
-                <script>
-                    window.onscroll = function () {
-                        myFunction()
-                    };
-            
-                    var header = document.getElementById("myHeader");
-                    var sticky = header.offsetTop;
-            
-                    function myFunction() {
-                        if (window.pageYOffset > sticky) {
-                            header.classList.add("sticky");
-                        } else {
-                            header.classList.remove("sticky");
-                        }
-                    }
-                </script>
-            -->
         </h:body>
     </f:view>
 </html>
